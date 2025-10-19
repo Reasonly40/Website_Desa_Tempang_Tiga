@@ -1,0 +1,201 @@
+/* CSS Global - Palet Warna Segar & Profesional */
+
+/* Variabel Warna & Font */
+:root {
+    --primary-color: #006400;   /* Hijau Hutan */
+    --background-color: #FFFFFF; /* Putih Bersih */
+    --secondary-bg-color: #E9ECEF; /* Abu-abu Terang */
+    --text-color: #1C3D5A;      /* Biru Dongker */
+    --light-color: #FFFFFF;     /* Putih untuk kontras pada tombol */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font modern */
+}
+
+/* Reset & Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+h1, h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+section {
+    padding: 40px 0;
+}
+
+/* Menggunakan Abu-abu Terang untuk latar belakang selang-seling */
+section:nth-child(even) {
+    background-color: var(--secondary-bg-color);
+}
+
+/* Header & Navigasi */
+header {
+    background: var(--light-color);
+    padding: 1rem 0;
+    border-bottom: 3px solid var(--primary-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Hero Section (Bagian Selamat Datang) */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1500x600.png?text=Selamat+Datang+di+Desa+Kami') no-repeat center center/cover;
+    height: 60vh;
+    color: var(--light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: var(--light-color);
+}
+
+/* Konten Grid untuk Profil, Kegiatan, dan Produk */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--light-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+/* Bagian Transparansi */
+.transparansi-item {
+    background: var(--light-color);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Menggunakan Hijau Hutan untuk tombol */
+.btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--light-color);
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    font-weight: bold;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #004d00; /* Versi lebih gelap dari Hijau Hutan */
+}
+
+/* Footer */
+footer {
+    background: var(--text-color); /* Biru Dongker */
+    color: var(--secondary-bg-color); /* Abu-abu Terang */
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+    }
+    
+    header .logo {
+        margin-bottom: 10px;
+    }
+
+    nav ul {
+        padding-top: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
