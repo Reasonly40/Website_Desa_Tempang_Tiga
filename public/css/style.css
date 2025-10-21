@@ -214,3 +214,10 @@ body.admin-body {
     width: 100%;
     z-index: 1; /* Kadang diperlukan agar peta terlihat */
 }
+
+/* Membuat iframe Google Maps di dalam card menjadi responsif */
+.card iframe {
+    width: 100%;     /* Lebar penuh mengisi card */
+    height: 300px;   /* Atur tinggi peta (sesuaikan dengan selera) */
+    display: block;  /* (Opsional) Menghilangkan spasi ekstra di bawah iframe */
+}
