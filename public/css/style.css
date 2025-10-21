@@ -207,3 +207,10 @@ body.admin-body {
     .sidebar { width: 100%; min-height: auto; }
     .main-content { padding: 20px; }
 }
+
+/* CSS untuk Peta Leaflet */
+#map { 
+    height: 300px; /* Atur tinggi peta sesuai selera */
+    width: 100%;
+    z-index: 1; /* Kadang diperlukan agar peta terlihat */
+}
