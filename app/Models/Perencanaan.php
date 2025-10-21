@@ -5,10 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Perencanaan extends Model // <-- Pastikan namanya "Perencanaan"
+class Perencanaan extends Model
 {
     use HasFactory;
 
-    // WAJIB ADA karena nama tabel Anda tunggal
     protected $table = 'perencanaan';
+
+    protected $fillable = [
+        'title',
+        'category',
+        'file_path',
+    ];
 }

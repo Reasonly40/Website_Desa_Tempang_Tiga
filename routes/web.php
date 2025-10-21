@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomepageController;
 
 // --- Controller untuk Halaman Admin ---
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\PerencanaanController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +36,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('home');
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // Rute untuk dashboard admin
-    Route::get('/dashboard', function () {
-        // Nantinya kita bisa buat Controller khusus untuk Dashboard
-        return '<h1>Selamat Datang di Dasbor Admin</h1>';
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Rute CRUD untuk setiap fitur
     Route::resource('kegiatan', KegiatanController::class);

@@ -9,16 +9,8 @@ class Anggaran extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel yang digunakan oleh model ini.
-     */
     protected $table = 'anggaran'; 
 
-    /**
-     * Atribut yang boleh diisi secara massal (mass assignable).
-     *
-     * @var array
-     */
     protected $fillable = [
         'title',
         'year',
