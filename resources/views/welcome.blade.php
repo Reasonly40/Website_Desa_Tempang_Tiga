@@ -54,7 +54,7 @@
         </div>
 
         {{-- Profil singkat --}}
-        <section id="profil" class="absolute left-1/2 bottom-[-30rem] transform -translate-x-1/2 w-full max-w-10xl px-6 md:px-12 lg:px-16 z-20">
+        <section id="profil" class="relative w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-20">
             <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
                 {{-- Judul --}}
                 <h2 class="text-2xl md:text-3xl font-bold mb-10 text-gray-900 text-center md:text-left"
@@ -127,7 +127,7 @@
             <div class="grid md:grid-cols-5 items-center gap-8">
                 
                 {{-- Kiri: Judul dan Tombol --}}
-                <div class="md:col-span-2 space-y-4">
+                <div class="md:col-span-2 space-y-4">   
                     <h2 class="text-2xl font-bold text-gray-900" style="font-family: 'Merriweather', serif;">
                         Statistik Desa
                     </h2>
@@ -209,6 +209,190 @@
             </div>
         </div>
     </section>
+
+    <!-- Section Video Desa -->
+    <section id="video" class="bg-blue-50 py-20">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-900 flex items-center space-x-2"
+                        style="font-family: 'Merriweather', serif;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.615 3.184A2.99 2.99 0 0 0 17.528 2H6.472a2.99 2.99 0 0 0-2.087 1.184A3.017 3.017 0 0 0 4 5.472v13.056c0 .69.236 1.328.668 1.816A2.99 2.99 0 0 0 6.472 22h11.056a2.99 2.99 0 0 0 2.087-1.184A3.017 3.017 0 0 0 20 18.528V5.472a3.017 3.017 0 0 0-.385-2.288zM10 16V8l6 4-6 4z"/>
+                        </svg>
+                        <span>Video Desa Tempang Tiga</span>
+                    </h2>
+                    <p class="text-gray-700 text-sm md:text-base mt-2">
+                        Simak dokumentasi dan kegiatan menarik seputar Desa Tempang Tiga.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Video Full Width -->
+            <div class="w-full rounded-2xl overflow-hidden shadow-lg">
+                <iframe class="w-full h-[400px] md:h-[550px]" 
+                        src="https://www.youtube.com/embed/VIDEO_ID_UTAMA" 
+                        title="Video Desa Tempang Tiga" 
+                        frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+
+            <!-- Caption -->
+            <p class="mt-6 text-center font-semibold text-gray-900 text-lg">
+                Potensi Desa Tempang Tiga
+            </p>
+        </div>
+    </section>
+
+    <!-- Section APBDes -->
+    <section id="apbdes" class="bg-white py-40 -mt-8">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold text-green-800 mb-3" style="font-family: 'Merriweather', serif;">APBDes 2025</h2>
+            <p class="text-gray-600 text-lg">Realisasi dan Anggaran Dana Desa Tahun 2025</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Card -->
+            <div class="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 border border-green-100">
+                <h3 class="text-2xl font-semibold text-green-800 text-center mb-2">Pelaksanaan</h3>
+                <p class="text-center text-gray-500 mb-8">Realisasi | Anggaran</p>
+
+                <!-- Item -->
+                <div class="space-y-6">
+                <div>
+                    <p class="font-medium text-gray-800">Pendapatan</p>
+                    <p class="text-sm text-gray-500">Rp 3.568.388.700,00 | Rp 3.568.388.700,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Belanja</p>
+                    <p class="text-sm text-gray-500">Rp 3.568.388.700,00 | Rp 3.568.388.700,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Pembiayaan</p>
+                    <p class="text-sm text-gray-500">Rp 2.761.320,00 | Rp 2.761.320,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+                </div>
+            </div>
+
+            <!-- Pendapatan -->
+            <div class="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 border border-green-100">
+                <h3 class="text-2xl font-semibold text-green-800 text-center mb-2">Pendapatan</h3>
+                <p class="text-center text-gray-500 mb-8">Realisasi | Anggaran</p>
+
+                <div class="space-y-6">
+                <div>
+                    <p class="font-medium text-gray-800">Dana Desa</p>
+                    <p class="text-sm text-gray-500">Rp 1.029.810.000,00 | Rp 1.029.810.000,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Bagi Hasil Pajak & Retribusi</p>
+                    <p class="text-sm text-gray-500">Rp 46.292.600,00 | Rp 46.292.600,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Alokasi Dana Desa</p>
+                    <p class="text-sm text-gray-500">Rp 2.492.286.100,00 | Rp 2.492.286.100,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+                </div>
+            </div>
+
+            <!-- Pembelanjaan -->
+            <div class="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 border border-green-100">
+                <h3 class="text-2xl font-semibold text-green-800 text-center mb-2">Pembelanjaan</h3>
+                <p class="text-center text-gray-500 mb-8">Realisasi | Anggaran</p>
+
+                <div class="space-y-6">
+                <div>
+                    <p class="font-medium text-gray-800">Penyelenggaraan Pemerintahan Desa</p>
+                    <p class="text-sm text-gray-500">Rp 1.516.050.228,00 | Rp 1.516.050.228,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Pelaksanaan Pembangunan Desa</p>
+                    <p class="text-sm text-gray-500">Rp 689.102.662,00 | Rp 689.102.662,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Pembinaan Kemasyarakatan</p>
+                    <p class="text-sm text-gray-500">Rp 424.631.110,00 | Rp 424.631.110,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Pemberdayaan Masyarakat</p>
+                    <p class="text-sm text-gray-500">Rp 776.974.700,00 | Rp 776.974.700,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+
+                <div>
+                    <p class="font-medium text-gray-800">Penanggulangan Bencana & Mendesak</p>
+                    <p class="text-sm text-gray-500">Rp 161.630.000,00 | Rp 161.630.000,00</p>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mt-2 overflow-hidden">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-[fill_1.5s_ease-out_forwards]" style="width:100%"></div>
+                    </div>
+                    <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+     </section>
+
+     <!-- Animasi progress -->
+    <style>
+        @keyframes fill {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+    </style>
+
+
+
+
+
 
 
 
