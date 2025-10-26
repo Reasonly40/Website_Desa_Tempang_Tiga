@@ -111,7 +111,7 @@
     {{-- Statistik Desa --}}
     <section id="statistik" class="bg-gray-50 py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-5 items-center gap-8 text-center md:text-left"> {{-- Tengahkan teks di mobile --}}
+            <div class="grid md:grid-cols-5 items-center gap-8 md:gap-12 text-center md:text-left"> {{-- Tambah gap md --}}
 
                 {{-- Kiri: Judul dan Tombol --}}
                 <div class="md:col-span-2 space-y-4">
@@ -119,24 +119,27 @@
                         Statistik Desa
                     </h2>
                     <a href="#"
-                    class="inline-flex items-center px-5 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm"> {{-- Sesuaikan ukuran font tombol --}}
+                       class="inline-flex items-center px-5 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                         Selengkapnya
                     </a>
                 </div>
 
                 {{-- Kanan: Angka Statistik --}}
-                <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-8 md:justify-items-end md:text-right"> 
-                    <div>
-                        <p class="text-4xl md:text-5xl font-light text-gray-900">1000+</p> 
-                        <p class="text-gray-600 mt-2 text-sm sm:text-base">Jumlah Penduduk</p> 
+                <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:justify-items-end md:text-right">
+                    {{-- Statistik Penduduk --}}
+                    <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none"> {{-- Styling card di mobile --}}
+                        <p class="text-4xl md:text-5xl font-light text-gray-900">1000+</p>
+                        <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Penduduk</p>
                     </div>
-                    <div>
-                        <p class="text-4xl md:text-5xl font-light text-gray-900">300+</p> 
-                        <p class="text-gray-600 mt-2 text-sm sm:text-base">Jumlah Keluarga</p> 
+                    {{-- Statistik Keluarga --}}
+                    <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
+                        <p class="text-4xl md:text-5xl font-light text-gray-900">300+</p>
+                        <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Keluarga</p>
                     </div>
-                    <div>
-                        <p class="text-4xl md:text-5xl font-light text-gray-900">4</p> 
-                        <p class="text-gray-600 mt-2 text-sm sm:text-base">Jaga</p> 
+                    {{-- Statistik Jaga --}}
+                    <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
+                        <p class="text-4xl md:text-5xl font-light text-gray-900">4</p>
+                        <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jaga</p>
                     </div>
                 </div>
             </div>
@@ -350,17 +353,17 @@
                     </div>
                 </div>
             </div>
-        </div>
-     </section>
 
-     {{-- Footer --}}
-     <footer class="bg-gray-800 text-gray-300 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            &copy; {{ date('Y') }} Pemerintah Desa Tempang Tiga. Hak Cipta Dilindungi.
-        </div>
-     </footer>
+            <div class="mt-20 text-center">
+                <a href="#" class="inline-flex items-center px-5 py-2 border border-green-700 text-green-800 rounded-full hover:bg-green-800 hover:text-white transition text-sm">
+                    Selengkapnya
+                </a>
+            </div>
 
-     {{-- Animasi progress tidak perlu di-style terpisah jika hanya 100% --}}
+        </div>
+    </section>
+
+    @include('layouts.partials.footer')
 
 </body>
 </html>
