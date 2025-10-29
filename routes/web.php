@@ -11,37 +11,79 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\PerencanaanController;
+use App\Http\Controllers\BeritaController;
+
+// --- Controller Bawaan Breeze ---
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
-| Rute untuk Halaman Publik
+| Rute Halaman Publik (User)
 |--------------------------------------------------------------------------
-|
-| Rute ini bisa diakses oleh siapa saja.
-|
+| Rute ini bisa diakses siapa saja.
 */
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
+/*
+|--------------------------------------------------------------------------
+| Rute Dasbor Bawaan Breeze (Opsional)
+|--------------------------------------------------------------------------
+| Rute ini akan diakses jika RouteServiceProvider.php HOME = '/dashboard'
+| Kita sudah ubah HOME ke /admin/dashboard, jadi rute ini mungkin tidak terpakai
+| tapi biarkan saja untuk sementara.
+*/
+Route::get('/dashboard', function () {
+    // Redirect saja ke dasbor admin jika sudah login
+    if (auth()->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    // Jika belum login, middleware auth akan melempar ke login
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 /*
 |--------------------------------------------------------------------------
-| Rute untuk Halaman Admin
+| Rute Panel Admin
 |--------------------------------------------------------------------------
-|
-| Semua rute di dalam grup ini akan memiliki:
-| 1. URL yang diawali dengan /admin (contoh: /admin/kegiatan/create)
-| 2. Nama rute yang diawali dengan admin. (contoh: admin.kegiatan.create)
-|
+| Semua rute di sini memerlukan login (middleware 'auth').
 */
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin') // URL diawali /admin
+    ->name('admin.') // Nama rute diawali admin.
+    ->middleware(['auth']) // WAJIB LOGIN
+    ->group(function () {
 
-    // Rute untuk dashboard admin
+    // Dasbor Admin Kustom Anda
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Rute CRUD untuk setiap fitur
+    // CRUD untuk Fitur-fitur Admin
     Route::resource('kegiatan', KegiatanController::class);
     Route::resource('produk', ProdukController::class);
     Route::resource('anggaran', AnggaranController::class);
     Route::resource('perencanaan', PerencanaanController::class);
+    Route::resource('berita', BeritaController::class);
+    // Tambahkan resource untuk Aparatur Desa jika sudah dibuat
+    // Route::resource('aparatur', AparaturDesaController::class);
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Rute Profil Bawaan Breeze
+|--------------------------------------------------------------------------
+| Rute untuk mengelola profil pengguna yang sedang login.
+*/
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Rute Autentikasi (Login, Register, Logout, dll.)
+|--------------------------------------------------------------------------
+| File ini berisi semua rute yang dibuat oleh Breeze.
+*/
+require __DIR__.'/auth.php';
