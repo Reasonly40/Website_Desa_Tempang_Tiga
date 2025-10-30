@@ -4,9 +4,12 @@
     <h2>Edit Berita</h2>
     <hr style="margin-bottom: 20px;">
 
-    <form action="{{ route('admin.berita.update', $berita->id) }}" method="POST" enctype="multipart/form-data">
+    {{-- 
+      PERBAIKAN 1: Tambahkan enctype="multipart/form-data" di sini 
+    --}}
+    <form action="{{ route('admin.berita.update', $berita) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('PUT') 
 
         <div class="form-group">
             <label for="title">Judul Berita</label>
@@ -34,3 +37,19 @@
         <button type="submit" class="btn-submit" style="background-color: #ffc107; color: #333;">Simpan Perubahan</button>
     </form>
 @endsection
+
+{{-- 
+  PERBAIKAN 2: Tambahkan skrip TinyMCE di sini
+  (Sama seperti di file create.blade.php)
+--}}
+@push('scripts')
+<script src="https://cdn.tiny.cloud/1/KEY_ANDA_DISINI/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+  tinymce.init({
+    selector: 'textarea#content',  // Menargetkan <textarea> dengan id="content"
+    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+  });
+</script>
+@endpush

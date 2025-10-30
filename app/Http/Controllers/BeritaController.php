@@ -17,6 +17,7 @@ class BeritaController extends Controller
     {
         // Ambil data berita terbaru, 10 per halaman
         $berita = Berita::latest()->paginate(10);
+        
         // Kirim data ke view
         return view('admin.berita.index', compact('berita'));
     }
@@ -48,6 +49,7 @@ class BeritaController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             // Simpan gambar ke folder 'public/storage/berita'
+            // (Hasilnya akan menjadi 'berita/namafile.jpg')
             $imagePath = $request->file('image')->store('berita', 'public');
         }
 
@@ -58,7 +60,7 @@ class BeritaController extends Controller
             'content' => $request->content,
             'image' => $imagePath,
             'published_at' => now(), // Langsung set waktu publish saat dibuat
-            // 'user_id' => auth()->id(), // Jika Anda menambahkan fitur penulis berita
+            // 'user_id' => auth()->id(), // Aktifkan ini jika Anda memiliki sistem login penulis
         ]);
 
         // 4. Redirect ke halaman daftar berita dengan pesan sukses
@@ -71,7 +73,7 @@ class BeritaController extends Controller
      */
     public function show(Berita $berita)
     {
-        // $berita sudah otomatis diambil berdasarkan ID/slug di URL
+        // $berita sudah otomatis diambil berdasarkan ID/slug di URL (Route Model Binding)
         // return view('admin.berita.show', compact('berita')); // Jika Anda ingin membuat halaman detail
         return '<h1>Detail Berita: ' . $berita->title . '</h1>'; // Placeholder
     }
@@ -82,7 +84,7 @@ class BeritaController extends Controller
      */
     public function edit(Berita $berita)
     {
-        // $berita sudah otomatis diambil berdasarkan ID/slug di URL
+        // $berita sudah otomatis diambil berdasarkan ID/slug di URL (Route Model Binding)
         // Kirim data berita yang ingin diedit ke view
         return view('admin.berita.edit', compact('berita'));
     }
@@ -95,13 +97,16 @@ class BeritaController extends Controller
     {
         // 1. Validasi input (judul tidak perlu unik jika sama dengan yang lama)
         $validated = $request->validate([
-            'title' => 'required|string|max:255|unique:berita,title,' . $berita->id, // Abaikan unik jika ID sama
+            // Abaikan aturan unik jika ID sama dengan berita yang sedang diedit
+            'title' => 'required|string|max:255|unique:berita,title,' . $berita->id, 
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Gambar opsional
         ]);
 
-        // 2. Update slug jika judul berubah
-        $validated['slug'] = Str::slug($request->title) . '-' . time();
+        // 2. [PERBAIKAN] Update slug HANYA JIKA judul berubah
+        if ($request->title !== $berita->title) {
+            $validated['slug'] = Str::slug($request->title) . '-' . time();
+        }
 
         // 3. Proses upload gambar baru jika ada
         if ($request->hasFile('image')) {
