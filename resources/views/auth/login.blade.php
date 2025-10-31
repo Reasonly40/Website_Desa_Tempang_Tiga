@@ -81,6 +81,26 @@
              color: #0f5132;
              font-size: 0.9rem;
         }
+
+        /* === PENYESUAIAN: Style untuk link Register === */
+        .register-link {
+            text-align: center;
+            margin-top: 25px; /* Beri jarak dari tombol login */
+            font-size: 0.9rem;
+            color: #555;
+            padding-top: 15px;
+            border-top: 1px solid #eee; /* Garis pemisah tipis */
+        }
+        .register-link a {
+            color: var(--primary-color); /* Warna hijau */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        /* === AKHIR PENYESUAIAN === */
+
     </style>
 </head>
 <body>
@@ -129,6 +149,21 @@
                 </button>
             </div>
         </form>
+
+        {{-- === PENYESUAIAN: Tambahkan link ke halaman Register === --}}
+        @if (Route::has('register'))
+        <div class="register-link">
+            <p>
+                Belum punya akun? 
+                <a href="{{ route('register') }}">
+                    Daftar di sini
+                </a>
+            </p>
+        </div>
+        @endif
+        {{-- === AKHIR PENYESUAIAN === --}}
+
     </div>
 </body>
 </html>
+

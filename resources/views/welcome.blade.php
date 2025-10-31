@@ -1,3 +1,8 @@
+@php
+    // Helper untuk memotong teks dan membersihkan HTML
+    use Illuminate\Support\Str;
+@endphp
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,7 +12,7 @@
     @vite('resources/css/app.css')
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> {{-- Tambahkan AlpineJS untuk toggle menu --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> {{-- Tambahkan AlpineJS untuk toggle menu --}}
 </head>
 <body class="font-sans antialiased bg-white text-gray-800">
 
@@ -146,53 +151,73 @@
         </div>
     </section>
 
-    {{-- Berita Terbaru Desa --}}
+    {{-- 
+      ===============================================================
+      BAGIAN BERITA DINAMIS (PENGGANTI KODE STATIS ANDA)
+      ===============================================================
+    --}}
     <section id="berita" class="bg-white py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10 md:mb-12" style="font-family: 'Merriweather', serif;">
                 Berita Terbaru Desa
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8"> {{-- Tetap 1 kolom di mobile --}}
-                <div class="bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
-                    <img src="https://placehold.co/600x400" alt="Berita 1" class="w-full h-48 sm:h-56 object-cover"> {{-- Sesuaikan tinggi gambar --}}
-                    <div class="p-4 sm:p-5">
-                        <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-2" style="font-family: 'Merriweather', serif;">Lorem Ipsum</h3> 
-                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed"> 
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                    </div>
-                </div>
+            {{-- Ganti grid statis dengan loop dinamis --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                @forelse ($beritaTerbaru as $berita)
+                    {{-- Tautkan seluruh kartu (link ke detail berita akan ditambahkan nanti) --}}
+                    <a href="#" {{-- TODO: Ganti '#' dengan route('berita.public.show', $berita->slug) jika sudah dibuat --}}
+                       class="block bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition group duration-300">
+                        
+                        {{-- Gambar Berita (Dinamis) --}}
+                        <img src="{{ $berita->image ? asset('storage/' . $berita->image) : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Berita' }}" 
+                             alt="{{ $berita->title }}" 
+                             class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105">
+                        
+                        <div class="p-4 sm:p-5">
+                            {{-- Judul Berita (Dinamis) --}}
+                            <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-2 group-hover:text-blue-600 transition-colors" style="font-family: 'Merriweather', serif;">
+                                {{ $berita->title }}
+                            </h3> 
+                            
+                            {{-- Konten/Isi Berita (Dinamis) - Dibuat ringkasan (excerpt) --}}
+                            <p class="text-gray-600 text-xs sm:text-sm leading-relaxed"> 
+                                {{-- Kita ambil 100 karakter pertama dari konten dan hapus tag HTML --}}
+                                {{ Str::limit(strip_tags($berita->content), 100, '...') }}
+                            </p>
 
-                <div class="bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
-                    <img src="https://placehold.co/600x400" alt="Berita 2" class="w-full h-48 sm:h-56 object-cover"> {{-- Sesuaikan tinggi gambar --}}
-                    <div class="p-4 sm:p-5">
-                        <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-2" style="font-family: 'Merriweather', serif;">Lorem Ipsum</h3> 
-                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed"> 
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
+                            {{-- Tanggal Terbit (Dinamis) --}}
+                            <p class="text-xs text-gray-400 mt-3">
+                                {{-- Format tanggal menggunakan Carbon --}}
+                                {{ $berita->published_at ? \Carbon\Carbon::parse($berita->published_at)->translatedFormat('d F Y') : '' }}
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    {{-- Tampilan jika tidak ada berita --}}
+                    <div class="md:col-span-3 text-center text-gray-500 py-10">
+                        <p>Belum ada berita terbaru yang dipublikasikan.</p>
                     </div>
-                </div>
+                @endforelse
 
-                <div class="bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
-                    <img src="https://placehold.co/600x400" alt="Berita 3" class="w-full h-48 sm:h-56 object-cover"> {{-- Sesuaikan tinggi gambar --}}
-                    <div class="p-4 sm:p-5">
-                        <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-2" style="font-family: 'Merriweather', serif;">Lorem Ipsum</h3> 
-                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed"> 
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                    </div>
-                </div>
             </div>
+            {{-- Akhir dari grid --}}
 
-            <div class="flex justify-center mt-10 md:mt-12"> {{-- Sesuaikan margin top --}}
-                <a href="#"
-                    class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm"> {{-- Sesuaikan ukuran font tombol --}}
-                    Selengkapnya
+            <div class="flex justify-center mt-10 md:mt-12">
+                <a href="#" {{-- TODO: Ganti '#' dengan route('berita.public.index') jika sudah dibuat --}}
+                   class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
+                    Lihat Semua Berita
                 </a>
             </div>
         </div>
     </section>
+    {{-- 
+      ===============================================================
+      AKHIR BAGIAN BERITA DINAMIS
+      ===============================================================
+    --}}
+
 
     <section id="video" class="bg-blue-50 py-16 md:py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -367,3 +392,4 @@
 
 </body>
 </html>
+

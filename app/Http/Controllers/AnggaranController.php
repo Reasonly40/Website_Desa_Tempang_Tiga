@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggaran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; // Pastikan ini diimpor
 
 class AnggaranController extends Controller
 {
     public function index()
     {
+        // Ganti nama variabel agar konsisten dengan model
         $anggaran = Anggaran::latest()->paginate(10);
         return view('admin.anggaran.index', compact('anggaran'));
     }
@@ -77,3 +78,4 @@ class AnggaranController extends Controller
         return redirect()->route('admin.anggaran.index')->with('success', 'Dokumen anggaran berhasil dihapus.');
     }
 }
+

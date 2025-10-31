@@ -28,11 +28,6 @@ Route::get('/', [HomepageController::class, 'index'])->name('home');
 |--------------------------------------------------------------------------
 | Rute Dasbor Bawaan Breeze
 |--------------------------------------------------------------------------
-| Rute ini dilindungi oleh middleware 'auth'. 
-| Jika pengguna sudah login, mereka akan diarahkan ke 'admin.dashboard'.
-| Jika belum, mereka akan diarahkan ke halaman login.
-| Ini adalah penyederhanaan dari logika 'if (Auth::check())' sebelumnya,
-| karena middleware 'auth' sudah menangani pemeriksaan tersebut.
 */
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
@@ -43,22 +38,24 @@ Route::get('/dashboard', function () {
 |--------------------------------------------------------------------------
 | Rute Grup Panel Admin
 |--------------------------------------------------------------------------
-| Semua rute di dalam grup ini:
-| 1. Memiliki awalan URL '/admin' (contoh: /admin/kegiatan)
-| 2. Memiliki awalan nama rute 'admin.' (contoh: admin.kegiatan.index)
-| 3. Memerlukan pengguna untuk login (middleware 'auth').
 */
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth']) // Hanya user terautentikasi yang bisa akses
+    // PERBAIKAN SEMENTARA (Cara 2):
+    // Mengembalikan ke 'auth' untuk debugging eror cache.
+    // Ini akan mengizinkan SEMUA user yang login mengakses admin,
+    // tapi akan menghilangkan eror "Target class [admin] does not exist."
+    ->middleware(['auth']) 
     ->group(function () {
 
         // Rute Dasbor Admin Kustom
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        // Rute untuk upload gambar dari TinyMCE
+        Route::post('/berita/upload-image', [BeritaController::class, 'uploadImage'])
+             ->name('berita.upload_image');
+
         // Rute CRUD (Create, Read, Update, Delete) menggunakan Resource Controller
-        // Penggunaan Route::resource ini sudah benar dan otomatis
-        // cocok dengan parameter {berita} di BeritaController Anda.
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('produk', ProdukController::class);
         Route::resource('anggaran', AnggaranController::class);

@@ -2,34 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kegiatan;
+// 1. IMPORT SEMUA MODEL YANG DIPERLUKAN
+use App\Models\Berita;
 use App\Models\Produk;
-use App\Models\Anggaran; 
+use App\Models\Kegiatan;
+use App\Models\Anggaran;
 use App\Models\Perencanaan;
 use Illuminate\Http\Request;
 
 class HomepageController extends Controller
 {
+    /**
+     * Menampilkan halaman utama (welcome page)
+     * dengan semua data yang diperlukan.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        // Mengambil 3 data kegiatan terbaru
-        $kegiatan = Kegiatan::latest()->take(3)->get();
+        // 2. AMBIL DATA DARI DATABASE
         
-        // Mengambil 3 data produk terbaru
-        $produk = Produk::latest()->take(3)->get();
+        // Ambil 3 data berita terbaru
+        $beritaTerbaru = Berita::latest()->take(3)->get();
+        
+        // Ambil 3 data produk terbaru
+        $produkTerbaru = Produk::latest()->take(3)->get();
+        
+        // Ambil 3 data kegiatan terbaru
+        $kegiatanTerbaru = Kegiatan::latest()->take(3)->get();
 
-        // Mengambil 1 dokumen anggaran terbaru
+        // Ambil data anggaran (realisasi) terbaru
         $anggaranTerbaru = Anggaran::latest()->first();
 
-        // Mengambil 1 dokumen perencanaan terbaru
+        // Ambil data perencanaan (target) terbaru
         $perencanaanTerbaru = Perencanaan::latest()->first();
 
-        // Mengirim semua data ke view 'welcome'
+        // 3. KIRIM SEMUA DATA KE VIEW 'welcome'
         return view('welcome', [
-            'kegiatan' => $kegiatan,
-            'produk' => $produk,
+            'beritaTerbaru' => $beritaTerbaru,
+            'produkTerbaru' => $produkTerbaru,
+            'kegiatanTerbaru' => $kegiatanTerbaru,
             'anggaranTerbaru' => $anggaranTerbaru,
             'perencanaanTerbaru' => $perencanaanTerbaru,
         ]);
     }
 }
+
