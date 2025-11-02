@@ -1,13 +1,16 @@
 @extends('layouts.admin')
+
 @section('title', 'Edit Berita')
+
 @section('content')
     <h2>Edit Berita</h2>
     <hr style="margin-bottom: 20px;">
 
-    {{-- 
-      PERBAIKAN 1: Tambahkan enctype="multipart/form-data" di sini 
+    {{-- Kode ini sudah benar. 
+         $berita di sini adalah variabel yang dikirim dari Controller: 
+         ['berita' => $beritum] 
     --}}
-    <form action="{{ route('admin.berita.update', $berita) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.berita.update', $berita->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT') 
 
@@ -38,13 +41,22 @@
     </form>
 @endsection
 
-{{-- 
-  PERBAIKAN 2: Tambahkan skrip TinyMCE di sini
-  (Sama seperti di file create.blade.php)
---}}
-@push('scripts')
-<script src="https://cdn.tiny.cloud/1/KEY_ANDA_DISINI/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+@push('styles')
+{{-- Menambahkan CSS konsisten dari file create/index --}}
+<style>
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+    .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: inherit; font-size: 1rem;}
+    .form-group input[type="file"] { padding: 3px; }
+    .btn-submit { background-color: #006400; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    .error-message { color: red; font-size: 0.9em; margin-top: 5px; }
+</style>
+@endpush
 
+@push('scripts')
+{{-- Skrip TinyMCE diperlukan di sini --}}
+{{-- Ganti KEY_ANDA_DISINI dengan API Key TinyMCE Anda --}}
+<script src="https://cdn.tiny.cloud/1/KEY_ANDA_DISINI/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
   tinymce.init({
     selector: 'textarea#content',  // Menargetkan <textarea> dengan id="content"

@@ -9,9 +9,6 @@ class Kegiatan extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel yang digunakan.
-     */
     protected $table = 'kegiatan';
 
     /**
@@ -20,9 +17,11 @@ class Kegiatan extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'description',
-        'activity_date',
-        'image',
+        'judul',        // Ganti dari 'title'
+        'deskripsi',    // Ganti dari 'description'
+        'tanggal',      // Ganti dari 'activity_date'
+        'gambar',       // Ganti dari 'image'
+        'lokasi',
+        'penanggung_jawab',
     ];
 }

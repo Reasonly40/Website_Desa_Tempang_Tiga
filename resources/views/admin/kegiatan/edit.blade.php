@@ -6,42 +6,41 @@
     <h2>Edit Dokumentasi Kegiatan</h2>
     <hr style="margin-bottom: 20px;">
 
-    {{-- 
-      PERUBAHAN 1:
-      Arahkan 'action' ke route 'update' dan kirim ID kegiatannya.
-    --}}
+    {{-- Action dan Method sudah benar --}}
     <form action="{{ route('admin.kegiatan.update', $kegiatan->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT') {{-- PERUBAHAN 2: Wajib ada untuk memberi tahu Laravel ini adalah proses UPDATE --}}
+        @method('PUT')
 
         <div class="form-group">
-            <label for="title">Judul Kegiatan</label>
-            {{-- PERUBAHAN 3: Isi 'value' dengan data lama --}}
-            <input type="text" id="title" name="title" value="{{ old('title', $kegiatan->title) }}" required>
-            @error('title') <div class="error-message">{{ $message }}</div> @enderror
+            {{-- PERBAIKAN: Sesuaikan dengan kolom 'judul' --}}
+            <label for="judul">Judul Kegiatan</label>
+            <input type="text" id="judul" name="judul" value="{{ old('judul', $kegiatan->judul) }}" required>
+            @error('judul') <div class="error-message">{{ $message }}</div> @enderror
         </div>
 
         <div class="form-group">
-            <label for="activity_date">Tanggal Pelaksanaan</label>
-             {{-- PERUBAHAN 4: Isi 'value' dengan data lama --}}
-            <input type="date" id="activity_date" name="activity_date" value="{{ old('activity_date', $kegiatan->activity_date) }}" required>
-            @error('activity_date') <div class="error-message">{{ $message }}</div> @enderror
+            {{-- PERBAIKAN: Sesuaikan dengan kolom 'tanggal' --}}
+            <label for="tanggal">Tanggal Pelaksanaan</label>
+            <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal', $kegiatan->tanggal) }}" required>
+            @error('tanggal') <div class="error-message">{{ $message }}</div> @enderror
         </div>
 
         <div class="form-group">
-            <label for="description">Deskripsi</label>
-             {{-- PERUBAHAN 5: Isi textarea dengan data lama --}}
-            <textarea id="description" name="description" rows="5" required>{{ old('description', $kegiatan->description) }}</textarea>
-            @error('description') <div class="error-message">{{ $message }}</div> @enderror
+            {{-- PERBAIKAN: Sesuaikan dengan kolom 'deskripsi' --}}
+            <label for="deskripsi">Deskripsi</label>
+            <textarea id="deskripsi" name="deskripsi" rows="5" required>{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
+            @error('deskripsi') <div class="error-message">{{ $message }}</div> @enderror
         </div>
 
         <div class="form-group">
-            <label for="image">Upload Gambar (Opsional)</label>
+            {{-- PERBAIKAN: Sesuaikan dengan kolom 'gambar' --}}
+            <label for="gambar">Upload Gambar (Opsional)</label>
             <br>
-            <img src="{{ asset('storage/' . $kegiatan->image) }}" alt="Gambar Lama" width="150" style="margin-bottom: 10px; border-radius: 5px;">
-            <input type="file" id="image" name="image">
+            {{-- Tampilkan gambar lama dari kolom 'gambar' --}}
+            <img src="{{ asset('storage/' . $kegiatan->gambar) }}" alt="Gambar Lama" width="150" style="margin-bottom: 10px; border-radius: 5px;">
+            <input type="file" id="gambar" name="gambar">
             <small>Kosongkan jika tidak ingin mengganti gambar.</small>
-            @error('image') <div class="error-message">{{ $message }}</div> @enderror
+            @error('gambar') <div class="error-message">{{ $message }}</div> @enderror
         </div>
         
         <button type="submit" class="btn-submit" style="background-color: #ffc107; color: #333;">Simpan Perubahan</button>
@@ -49,7 +48,7 @@
 @endsection
 
 @push('styles')
-{{-- (Tidak ada perubahan pada CSS, jadi kita biarkan saja) --}}
+{{-- CSS Anda sudah benar --}}
 <style>
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }

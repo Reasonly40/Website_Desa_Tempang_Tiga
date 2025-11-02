@@ -7,8 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // Untuk mengelola file/gambar
 use Illuminate\Support\Str; // Untuk membuat slug dari judul
 
-class BeritaController extends Controller
+// PERBAIKAN 1: Tambahkan 'use' statement untuk Controller inti Laravel dan traits
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+
+// PERBAIKAN 2: Ubah 'extends Controller' menjadi 'extends BaseController'
+class BeritaController extends BaseController
 {
+    // PERBAIKAN 3: Tambahkan traits yang hilang agar ->validate() berfungsi
+    use AuthorizesRequests, ValidatesRequests;
+
     /**
      * Menampilkan daftar semua berita (halaman admin).
      * Terhubung ke route: GET /admin/berita (nama: admin.berita.index)
@@ -16,7 +25,8 @@ class BeritaController extends Controller
     public function index()
     {
         // Ambil data berita terbaru, 10 per halaman
-        $berita = Berita::latest()->paginate(10);
+        // PERBAIKAN: Tambahkan ->with('user') untuk mengambil data penulis (optimasi query)
+        $berita = Berita::with('user')->latest()->paginate(10);
         
         // Kirim data ke view
         return view('admin.berita.index', compact('berita'));
@@ -60,7 +70,10 @@ class BeritaController extends Controller
             'content' => $request->content,
             'image' => $imagePath,
             'published_at' => now(), // Langsung set waktu publish saat dibuat
-            // 'user_id' => auth()->id(), // Aktifkan ini jika Anda memiliki sistem login penulis
+            
+            // PERBAIKAN SEMENTARA: 
+            // Baris ini dikomentari karena kolom 'user_id' tidak ada di database Anda.
+            // 'user_id' => auth()->id(), 
         ]);
 
         // 4. Redirect ke halaman daftar berita dengan pesan sukses
@@ -144,3 +157,4 @@ class BeritaController extends Controller
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
     }
 }
+

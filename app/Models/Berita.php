@@ -9,28 +9,24 @@ class Berita extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'berita'; // <-- ADD THIS LINE
+    protected $table = 'berita';
 
     /**
-     * The attributes that are mass assignable.
+     * Kolom yang boleh diisi.
      */
     protected $fillable = [
         'title',
         'slug',
         'content',
         'image',
-        'published_at',
+        'user_id',
     ];
 
     /**
-     * The attributes that should be cast.
+     * Relasi ke User (Penulis)
      */
-    protected $casts = [
-        'published_at' => 'datetime',
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

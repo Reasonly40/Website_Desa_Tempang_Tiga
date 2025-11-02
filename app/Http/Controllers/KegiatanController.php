@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kegiatan;
+use App\Models\Kegiatan; // Pastikan model diimpor
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // <-- Pastikan ini ada
+use Illuminate\Support\Facades\Storage;
 
 class KegiatanController extends Controller
 {
     /**
-     * Menampilkan daftar semua kegiatan (halaman admin).
+     * Menampilkan daftar semua kegiatan.
      */
     public function index()
     {
-        // Ambil semua data kegiatan, urutkan dari yang terbaru
         $kegiatan = Kegiatan::latest()->paginate(10);
-        
-        // Kirim data ke view 'admin.kegiatan.index'
         return view('admin.kegiatan.index', compact('kegiatan'));
     }
 
@@ -25,7 +22,6 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        // Method ini sudah benar
         return view('admin.kegiatan.create');
     }
 
@@ -34,79 +30,64 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi Input
+        // --- PERBAIKAN: Sesuaikan validasi dengan nama kolom di Migrasi --
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'activity_date' => 'required|date',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'tanggal' => 'required|date',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048' // Wajib diisi
         ]);
 
-        // 2. Proses Upload Gambar
-        $imagePath = $request->file('image')->store('kegiatan', 'public');
+        // --- PERBAIKAN: Simpan gambar ---
+        $imagePath = $request->file('gambar')->store('kegiatan', 'public');
 
-        // 3. Simpan Data ke Database
+        // --- PERBAIKAN: Simpan ke database dengan nama kolom yang benar ---
         Kegiatan::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'activity_date' => $request->activity_date,
-            'image' => $imagePath,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'tanggal' => $request->tanggal,
+            'gambar' => $imagePath,
+            // 'lokasi' dan 'penanggung_jawab' opsional, jadi tidak perlu diisi di sini
         ]);
 
-        // 4. Redirect kembali ke halaman index (daftar kegiatan)
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Data kegiatan berhasil ditambahkan!');
-    }
-
-    /**
-     * Menampilkan detail satu kegiatan. (Belum kita buat view-nya)
-     */
-    public function show(Kegiatan $kegiatan)
-    {
-        return '<h1>Ini adalah halaman detail untuk kegiatan: ' . $kegiatan->title . '</h1>';
+        return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan!');
     }
 
     /**
      * Menampilkan form untuk mengedit kegiatan.
-     * (INI YANG DISESUAIKAN)
      */
     public function edit(Kegiatan $kegiatan)
     {
-        // $kegiatan sudah otomatis diambil berdasarkan ID di URL
-        // Kirim data $kegiatan itu ke view 'admin.kegiatan.edit'
         return view('admin.kegiatan.edit', compact('kegiatan'));
     }
 
     /**
      * Memperbarui data kegiatan di database.
-     * (INI YANG DISESUAIKAN)
      */
     public function update(Request $request, Kegiatan $kegiatan)
     {
-        // 1. Validasi Input (gambar sekarang boleh kosong/nullable)
+         // --- PERBAIKAN: Validasi dengan nama kolom yang benar ---
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'activity_date' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Opsional
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'tanggal' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Opsional saat update
         ]);
 
-        // 2. Cek apakah ada file gambar baru
-        if ($request->hasFile('image')) {
-            // Hapus gambar lama
-            if ($kegiatan->image) {
-                Storage::disk('public')->delete($kegiatan->image);
+        // --- PERBAIKAN: Cek file 'gambar' ---
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($kegiatan->gambar) {
+                Storage::disk('public')->delete($kegiatan->gambar);
             }
-            
             // Simpan gambar baru
-            $imagePath = $request->file('image')->store('kegiatan', 'public');
-            $validated['image'] = $imagePath; // Tambahkan path gambar baru ke data
+            $imagePath = $request->file('gambar')->store('kegiatan', 'public');
+            $validated['gambar'] = $imagePath;
         }
 
-        // 3. Update data di database
         $kegiatan->update($validated);
 
-        // 4. Redirect kembali ke halaman index (daftar kegiatan)
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Data kegiatan berhasil diperbarui!');
+        return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui!');
     }
 
     /**
@@ -114,15 +95,12 @@ class KegiatanController extends Controller
      */
     public function destroy(Kegiatan $kegiatan)
     {
-        // 1. Hapus file gambar dari storage
-        if ($kegiatan->image) {
-            Storage::disk('public')->delete($kegiatan->image);
+        // --- PERBAIKAN: Cek kolom 'gambar' ---
+        if ($kegiatan->gambar) {
+            Storage::disk('public')->delete($kegiatan->gambar);
         }
-
-        // 2. Hapus data dari database
         $kegiatan->delete();
 
-        // 3. Redirect kembali ke halaman index dengan pesan sukses
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Data kegiatan berhasil dihapus.');
+        return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil dihapus.');
     }
 }
