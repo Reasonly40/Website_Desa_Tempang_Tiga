@@ -10,6 +10,15 @@ class Anggaran extends Model
     use HasFactory;
 
     /**
+     * PERBAIKAN: Menentukan nama tabel secara manual.
+     *
+     * Secara default, Laravel akan mencari tabel 'anggarans' (plural).
+     * Baris ini memberi tahu Laravel bahwa nama tabel Anda adalah 'anggaran' (singular).
+     * Ini akan memperbaiki error "Table 'anggarans' doesn't exist".
+     */
+    protected $table = 'anggaran';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -27,3 +36,4 @@ class Anggaran extends Model
         'pembiayaan',
     ];
 }
+
