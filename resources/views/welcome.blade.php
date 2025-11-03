@@ -48,23 +48,14 @@
     @vite('resources/css/app.css')
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-<<<<<<< HEAD
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-=======
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
 </head>
 <body class="font-sans antialiased bg-white text-gray-800">
 
     @include('layouts.partials.back-to-top')
     @include('layouts.partials.navbar')
 
-<<<<<<< HEAD
     <section class="relative text-center bg-white pt-10 md:pt-20"> {{-- Kurangi padding top di mobile --}}
-=======
-    {{-- Hero Section --}}
-    <section class="relative text-center bg-white pt-10 md:pt-20">
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-left md:ml-4 lg:ml-8">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900" style="font-family: 'Merriweather', serif;">
@@ -97,12 +88,7 @@
                             Desa Tempang Tiga adalah salah satu desa di Kecamatan Langowan Utara yang dikenal dengan semangat gotong royong dan potensi pertanian yang melimpah.
                         </p>
 
-<<<<<<< HEAD
                         <div class="w-full h-48 sm:h-64 bg-gray-100 rounded-lg overflow-hidden shadow-sm"> {{-- Sesuaikan tinggi peta --}}
-=======
-                        {{-- Peta --}}
-                        <div class="w-full h-48 sm:h-64 bg-gray-100 rounded-lg overflow-hidden shadow-sm">
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                             <iframe
                                 src="https://maps.google.com/maps?q=Desa%20Tempang%20Tiga%2C%20Langowan%20Utara&t=&z=15&ie=UTF8&iwloc=&output=embed"
                                 width="100%"
@@ -153,13 +139,8 @@
 
     <section id="statistik" class="bg-gray-50 py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<<<<<<< HEAD
             <div class="grid md:grid-cols-5 items-center gap-8 md:gap-12 text-center md:text-left"> {{-- Tambah gap md --}}
 
-=======
-            <div class="grid md:grid-cols-5 items-center gap-8 md:gap-12 text-center md:text-left">
-                {{-- Kiri: Judul dan Tombol --}}
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                 <div class="md:col-span-2 space-y-4">
                     <h2 class="text-xl sm:text-2xl font-bold text-gray-900" style="font-family: 'Merriweather', serif;">
                         Statistik Desa
@@ -170,14 +151,8 @@
                     </a>
                 </div>
 
-<<<<<<< HEAD
                 <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:justify-items-end md:text-right">
                     <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none"> {{-- Styling card di mobile --}}
-=======
-                {{-- Kanan: Angka Statistik (Masih Statis - Controller belum menyediakan data ini) --}}
-                <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:justify-items-end md:text-right">
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                         <p class="text-4xl md:text-5xl font-light text-gray-900">1000+</p>
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Penduduk</p>
                     </div>
@@ -190,53 +165,6 @@
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jaga</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-<<<<<<< HEAD
-=======
-    {{-- Berita Terbaru Desa (Dinamis) --}}
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
-    <section id="berita" class="bg-white py-16 md:py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10 md:mb-12" style="font-family: 'Merriweather', serif;">
-                Berita Terbaru Desa
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @forelse ($beritaTerbaru as $berita)
-                    <a href="#" {{-- TODO: Ganti '#' dengan route('berita.public.show', $berita->slug) --}}
-                       class="block bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition group duration-300">
-                        
-                        <img src="{{ $berita->image ? asset('storage/' . $berita->image) : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Berita' }}" 
-                             alt="{{ $berita->title }}" 
-                             class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105">
-                        
-                        <div class="p-4 sm:p-5">
-                            <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-2 group-hover:text-blue-600 transition-colors" style="font-family: 'Merriweather', serif;">
-                                {{ $berita->title }}
-                            </h3> 
-                            <p class="text-gray-600 text-xs sm:text-sm leading-relaxed"> 
-                                {{ Str::limit(strip_tags($berita->content), 100, '...') }}
-                            </p>
-                            <p class="text-xs text-gray-400 mt-3">
-                                {{ $berita->published_at ? \Carbon\Carbon::parse($berita->published_at)->translatedFormat('d F Y') : '' }}
-                            </p>
-                        </div>
-                    </a>
-                @empty
-                    <div class="md:col-span-3 text-center text-gray-500 py-10">
-                        <p>Belum ada berita terbaru yang dipublikasikan.</p>
-                    </div>
-                @endforelse
-            </div>
-
-            <div class="flex justify-center mt-10 md:mt-12">
-                <a href="#" {{-- TODO: Ganti '#' dengan route('berita.public.index') --}}
-                   class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
-                    Lihat Semua Berita
-                </a>
             </div>
         </div>
     </section>
@@ -372,13 +300,7 @@
             {{-- Cek apakah data perencanaan (anggaran) dan anggaran (realisasi) ada --}}
             @if($perencanaanTerbaru && $anggaranTerbaru)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-<<<<<<< HEAD
                 <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100"> {{-- Kurangi shadow hover, sesuaikan padding --}}
-=======
-                
-                {{-- Card Pelaksanaan (Total) --}}
-                <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100">
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                     <h3 class="text-xl md:text-2xl font-semibold text-green-800 text-center mb-1 md:mb-2">Pelaksanaan</h3> 
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p> 
                     <div class="space-y-4 md:space-y-6">
@@ -394,11 +316,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                        {{-- Item Belanja (Total) --}}
-                        @php $persen = hitungPersen($total_anggaran_belanja, $total_perencanaan_belanja); @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Belanja</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -409,15 +326,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                        {{-- Item Pembiayaan --}}
-                        @php
-                            $realisasi = $anggaranTerbaru->pembiayaan ?? 0;
-                            $anggaran = $perencanaanTerbaru->pembiayaan ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                        @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pembiayaan</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -431,23 +339,10 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-=======
-                {{-- Card Pendapatan (Rincian) --}}
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                 <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100">
                     <h3 class="text-xl md:text-2xl font-semibold text-green-800 text-center mb-1 md:mb-2">Pendapatan</h3>
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p>
                     <div class="space-y-4 md:space-y-6">
-<<<<<<< HEAD
-=======
-                         {{-- Item Dana Desa --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->dana_desa ?? 0;
-                            $anggaran = $perencanaanTerbaru->dana_desa ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                         @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Dana Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -458,15 +353,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                         {{-- Item Bagi Hasil --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->bagi_hasil ?? 0;
-                            $anggaran = $perencanaanTerbaru->bagi_hasil ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                         @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Bagi Hasil Pajak & Retribusi</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -477,15 +363,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                         {{-- Item Alokasi Dana Desa --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->alokasi_dana_desa ?? 0;
-                            $anggaran = $perencanaanTerbaru->alokasi_dana_desa ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                         @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Alokasi Dana Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -499,23 +376,10 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-=======
-                {{-- Card Pembelanjaan (Rincian) --}}
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                 <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100">
                     <h3 class="text-xl md:text-2xl font-semibold text-green-800 text-center mb-1 md:mb-2">Pembelanjaan</h3>
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p>
                     <div class="space-y-4 md:space-y-6">
-<<<<<<< HEAD
-=======
-                        {{-- Item Penyelenggaraan Pemerintahan --}}
-                        @php
-                            $realisasi = $anggaranTerbaru->penyelenggaraan_pemerintahan ?? 0;
-                            $anggaran = $perencanaanTerbaru->penyelenggaraan_pemerintahan ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                        @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Penyelenggaraan Pemerintahan Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -526,15 +390,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                         {{-- Item Pelaksanaan Pembangunan --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->pelaksanaan_pembangunan ?? 0;
-                            $anggaran = $perencanaanTerbaru->pelaksanaan_pembangunan ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                        @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pelaksanaan Pembangunan Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -545,15 +400,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                         {{-- Item Pembinaan Kemasyarakatan --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->pembinaan_kemasyarakatan ?? 0;
-                            $anggaran = $perencanaanTerbaru->pembinaan_kemasyarakatan ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                        @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pembinaan Kemasyarakatan</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -564,15 +410,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                         {{-- Item Pemberdayaan Masyarakat --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->pemberdayaan_masyarakat ?? 0;
-                            $anggaran = $perencanaanTerbaru->pemberdayaan_masyarakat ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                        @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pemberdayaan Masyarakat</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
@@ -583,15 +420,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
-<<<<<<< HEAD
-=======
-                         {{-- Item Penanggulangan Bencana --}}
-                         @php
-                            $realisasi = $anggaranTerbaru->penanggulangan_bencana ?? 0;
-                            $anggaran = $perencanaanTerbaru->penanggulangan_bencana ?? 0;
-                            $persen = hitungPersen($realisasi, $anggaran);
-                        @endphp
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Penanggulangan Bencana & Mendesak</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">

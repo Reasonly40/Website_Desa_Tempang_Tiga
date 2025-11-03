@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 // 1. IMPORT SEMUA MODEL YANG DIPERLUKAN
-use App\Models\Berita;
 use App\Models\Produk;
 use App\Models\Kegiatan;
 use App\Models\Anggaran;
@@ -22,9 +21,6 @@ class HomepageController extends Controller
     {
         // 2. AMBIL DATA DARI DATABASE
         
-        // Ambil 3 data berita terbaru
-        $beritaTerbaru = Berita::latest()->take(3)->get();
-        
         // Ambil 3 data produk terbaru
         $produkTerbaru = Produk::latest()->take(3)->get();
         
@@ -39,7 +35,6 @@ class HomepageController extends Controller
 
         // 3. KIRIM SEMUA DATA KE VIEW 'welcome'
         return view('welcome', [
-            'beritaTerbaru' => $beritaTerbaru,
             'produkTerbaru' => $produkTerbaru,
             'kegiatanTerbaru' => $kegiatanTerbaru,
             'anggaranTerbaru' => $anggaranTerbaru,

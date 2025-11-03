@@ -12,7 +12,6 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\PerencanaanController;
-use App\Http\Controllers\BeritaController; 
 
 // --- Controller Bawaan Breeze ---
 use App\Http\Controllers\ProfileController;
@@ -24,7 +23,6 @@ use App\Http\Controllers\ProfileController;
 */
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
-<<<<<<< HEAD
 Route::get('/visi-misi', function () {
     return view('profil-desa.visi-misi');
 })->name('visi-misi');
@@ -68,16 +66,6 @@ Route::get('/kontak', function () {
 Route::get('/pengembang', function () {
     return view('pengembang');
 })->name('pengembang');
-=======
-/*
-|--------------------------------------------------------------------------
-| Rute Dasbor Bawaan Breeze
-|--------------------------------------------------------------------------
-*/
-Route::get('/dashboard', function () {
-    return redirect()->route('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
->>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
 
 
 /*
@@ -97,16 +85,11 @@ Route::prefix('admin')
         // Rute Dasbor Admin Kustom
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // Rute untuk upload gambar dari TinyMCE
-        Route::post('/berita/upload-image', [BeritaController::class, 'uploadImage'])
-             ->name('berita.upload_image');
-
         // Rute CRUD (Create, Read, Update, Delete) menggunakan Resource Controller
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('produk', ProdukController::class);
         Route::resource('anggaran', AnggaranController::class);
         Route::resource('perencanaan', PerencanaanController::class);
-        Route::resource('berita', BeritaController::class); // Rute untuk Berita
 
 });
 
