@@ -57,7 +57,6 @@ class DataDemografiController extends Controller
             'pek_lain_lain' => 'required|integer|min:0',
             
             'agama_islam' => 'required|integer|min:0',
-            'agama_kristen' => 'required|integer|min:0',
             'agama_protestan' => 'required|integer|min:0',
             'agama_katolik' => 'required|integer|min:0',
             'agama_hindu' => 'required|integer|min:0',

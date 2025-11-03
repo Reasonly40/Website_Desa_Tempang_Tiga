@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>  
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="font-sans antialiased bg-gray-50 text-gray-800 scroll-smooth flex flex-col min-h-screen">
@@ -34,66 +34,11 @@
                     </h2>
                     
                     @php
-                        // Data dari gambar
-                        $penduduk_total = 1060;
-                        $kk_total = 366;
-
-                        // Laki-laki
-                        $laki_0_15 = 57;
-                        $laki_16_55 = 272;
-                        $laki_diatas_55 = 125;
-                        $laki_total = $laki_0_15 + $laki_16_55 + $laki_diatas_55; // 454
-
-                        // Perempuan (dari gambar lain)
-                        $perempuan_0_15 = 59;
-                        $perempuan_16_55 = 251;
-                        $perempuan_diatas_55 = 120;
-                        $perempuan_total = $perempuan_0_15 + $perempuan_16_55 + $perempuan_diatas_55; // 430
-                        
-                        // Data Kesejahteraan
-                        $kk_sejahtera = 85;
-                        $kk_kaya = 102;
-                        $kk_sedang = 29;
-                        $kk_miskin = 34;
-
-                        // Data Pendidikan
-                        $pend_tidak_sd = 95;
-                        $pend_sd = 226;
-                        $pend_sltp = 189;
-                        $pend_slta = 181;
-                        $pend_diploma = 79;
-                        $pend_total_pendidikan = $pend_tidak_sd + $pend_sd + $pend_sltp + $pend_slta + $pend_diploma; // 770
-
-                        // Data Pekerjaan
-                        $pek_buruh_tani = 28;
-                        $pek_petani = 245;
-                        $pek_peternak = 11;
-                        $pek_pedagang = 12;
-                        $pek_tukang_kayu = 4;
-                        $pek_tukang_batu = 2;
-                        $pek_penjahit = 4;
-                        $pek_pns = 58;
-                        $pek_peralatan = 18; // Kurang jelas, asumsi "Peralatan"
-                        $pek_tni_polri = 1;
-                        $pek_perangkat_desa = 24;
-                        $pek_pengrajin = 1;
-                        $pek_industri_kecil = 1;
-                        $pek_buruh_industri = 1;
-                        $pek_lain_lain = 40;
-                        $pek_total = $pek_buruh_tani + $pek_petani + $pek_peternak + $pek_pedagang + $pek_tukang_kayu + $pek_tukang_batu + $pek_penjahit + $pek_pns + $pek_peralatan + $pek_tni_polri + $pek_perangkat_desa + $pek_pengrajin + $pek_industri_kecil + $pek_buruh_industri + $pek_lain_lain; // 450
-
-                        // Data Agama
-                        $agama_islam = 0; // Tidak ada di tabel
-                        $agama_kristen = 0; // Tidak ada di tabel
-                        $agama_protestan = 671;
-                        $agama_katolik = 0; // Tidak ada di tabel
-                        $agama_hindu = 0; // Tidak ada di tabel
-                        $agama_budha = 0; // Tidak ada di tabel
-                        $agama_total = $agama_protestan; // Total dari tabel
-
+                        $laki_total = ($data->laki_0_15 ?? 0) + ($data->laki_16_55 ?? 0) + ($data->laki_diatas_55 ?? 0);
+                        $perempuan_total = ($data->perempuan_0_15 ?? 0) + ($data->perempuan_16_55 ?? 0) + ($data->perempuan_diatas_55 ?? 0);
                     @endphp
 
-                    {{-- Tabel Kependudukan --}}
+                    {{-- Tabel Kependudukan (Dinamis) --}}
                     <table class="w-full text-left text-sm text-gray-600 mb-6">
                         <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
                             <tr>
@@ -103,50 +48,54 @@
                         </thead>
                         <tbody>
                             <tr class="border-b"><td class="p-3 font-semibold text-gray-800" colspan="2">1. Kependudukan</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">A. Jumlah Penduduk (Jiwa)</td><td class="p-3 text-right">{{ $penduduk_total }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">B. Jumlah KK</td><td class="p-3 text-right">{{ $kk_total }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">A. Jumlah Penduduk (Jiwa)</td><td class="p-3 text-right">{{ $data->penduduk_total ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">B. Jumlah KK</td><td class="p-3 text-right">{{ $data->kk_total ?? 0 }}</td></tr>
                             <tr class="border-b"><td class="p-3 pl-6">C. Jumlah laki-laki</td><td class="p-3 text-right">{{ $laki_total }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-10">a. 0 - 15 tahun</td><td class="p-3 text-right">{{ $laki_0_15 }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-10">b. 16 - 55 tahun</td><td class="p-3 text-right">{{ $laki_16_55 }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-10">c. Diatas 55 tahun</td><td class="p-3 text-right">{{ $laki_diatas_55 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-10">a. 0 - 15 tahun</td><td class="p-3 text-right">{{ $data->laki_0_15 ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-10">b. 16 - 55 tahun</td><td class="p-3 text-right">{{ $data->laki_16_55 ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-10">c. Diatas 55 tahun</td><td class="p-3 text-right">{{ $data->laki_diatas_55 ?? 0 }}</td></tr>
                             <tr class="border-b"><td class="p-3 pl-6">D. Jumlah perempuan</td><td class="p-3 text-right">{{ $perempuan_total }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-10">a. 0 - 15 tahun</td><td class="p-3 text-right">{{ $perempuan_0_15 }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-10">b. 16 - 55 tahun</td><td class="p-3 text-right">{{ $perempuan_16_55 }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-10">c. Diatas 55 tahun</td><td class="p-3 text-right">{{ $perempuan_diatas_55 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-10">a. 0 - 15 tahun</td><td class="p-3 text-right">{{ $data->perempuan_0_15 ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-10">b. 16 - 55 tahun</td><td class="p-3 text-right">{{ $data->perempuan_16_55 ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-10">c. Diatas 55 tahun</td><td class="p-3 text-right">{{ $data->perempuan_diatas_55 ?? 0 }}</td></tr>
                         
                             <tr class="border-b"><td class="p-3 font-semibold text-gray-800" colspan="2">2. Kesejahteraan Sosial</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">A. Jumlah KK Sejahtera</td><td class="p-3 text-right">{{ $kk_sejahtera }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">B. Jumlah KK Kaya</td><td class="p-3 text-right">{{ $kk_kaya }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">C. Jumlah KK Sedang</td><td class="p-3 text-right">{{ $kk_sedang }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">D. Jumlah KK Miskin</td><td class="p-3 text-right">{{ $kk_miskin }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">A. Jumlah KK Prasejahtera</td><td class="p-3 text-right">{{ $data->kk_prasejahtera ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">B. Jumlah KK Sejahtera</td><td class="p-3 text-right">{{ $data->kk_sejahtera ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">C. Jumlah KK Kaya</td><td class="p-3 text-right">{{ $data->kk_kaya ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">D. Jumlah KK Sedang</td><td class="p-3 text-right">{{ $data->kk_sedang ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">E. Jumlah KK Miskin</td><td class="p-3 text-right">{{ $data->kk_miskin ?? 0 }}</td></tr>
 
                             <tr class="border-b"><td class="p-3 font-semibold text-gray-800" colspan="2">3. Tingkat Pendidikan</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">A. Tidak tamat SD</td><td class="p-3 text-right">{{ $pend_tidak_sd }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">B. SD</td><td class="p-3 text-right">{{ $pend_sd }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">C. SLTP</td><td class="p-3 text-right">{{ $pend_sltp }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">D. SLTA</td><td class="p-3 text-right">{{ $pend_slta }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">E. Diploma/Sarjana</td><td class="p-3 text-right">{{ $pend_diploma }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">A. Tidak tamat SD</td><td class="p-3 text-right">{{ $data->pend_tidak_sd ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">B. SD</td><td class="p-3 text-right">{{ $data->pend_sd ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">C. SLTP</td><td class="p-3 text-right">{{ $data->pend_sltp ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">D. SLTA</td><td class="p-3 text-right">{{ $data->pend_slta ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">E. Diploma/Sarjana</td><td class="p-3 text-right">{{ $data->pend_diploma ?? 0 }}</td></tr>
 
                             <tr class="border-b"><td class="p-3 font-semibold text-gray-800" colspan="2">4. Mata Pencaharian</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">A. Buruh Tani</td><td class="p-3 text-right">{{ $pek_buruh_tani }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">B. Petani</td><td class="p-3 text-right">{{ $pek_petani }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">C. Peternak</td><td class="p-3 text-right">{{ $pek_peternak }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">D. Pedagang</td><td class="p-3 text-right">{{ $pek_pedagang }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">E. Tukang Kayu</td><td class="p-3 text-right">{{ $pek_tukang_kayu }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">F. Tukang Batu</td><td class="p-3 text-right">{{ $pek_tukang_batu }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">G. Penjahit</td><td class="p-3 text-right">{{ $pek_penjahit }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">H. PNS</td><td class="p-3 text-right">{{ $pek_pns }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">I. Peralatan</td><td class="p-3 text-right">{{ $pek_peralatan }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">J. TNI/Polri</td><td class="p-3 text-right">{{ $pek_tni_polri }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">K. Perangkat Desa</td><td class="p-3 text-right">{{ $pek_perangkat_desa }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">L. Pengrajin</td><td class="p-3 text-right">{{ $pek_pengrajin }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">M. Industri Kecil</td><td class="p-3 text-right">{{ $pek_industri_kecil }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">N. Buruh Industri</td><td class="p-3 text-right">{{ $pek_buruh_industri }}</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">O. Lain-lain</td><td class="p-3 text-right">{{ $pek_lain_lain }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">A. Buruh Tani</td><td class="p-3 text-right">{{ $data->pek_buruh_tani ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">B. Petani</td><td class="p-3 text-right">{{ $data->pek_petani ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">C. Peternak</td><td class="p-3 text-right">{{ $data->pek_peternak ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">D. Pedagang</td><td class="p-3 text-right">{{ $data->pek_pedagang ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">E. Tukang Kayu</td><td class="p-3 text-right">{{ $data->pek_tukang_kayu ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">F. Tukang Batu</td><td class="p-3 text-right">{{ $data->pek_tukang_batu ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">G. Penjahit</td><td class="p-3 text-right">{{ $data->pek_penjahit ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">H. PNS</td><td class="p-3 text-right">{{ $data->pek_pns ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">I. Pensiunan</td><td class="p-3 text-right">{{ $data->pek_pensiunan ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">J. TNI/Polri</td><td class="p-3 text-right">{{ $data->pek_tni_polri ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">K. Perangkat Desa</td><td class="p-3 text-right">{{ $data->pek_perangkat_desa ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">L. Pengrajin</td><td class="p-3 text-right">{{ $data->pek_pengrajin ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">M. Industri Kecil</td><td class="p-3 text-right">{{ $data->pek_industri_kecil ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">N. Buruh Industri</td><td class="p-3 text-right">{{ $data->pek_buruh_industri ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">O. Lain-lain</td><td class="p-3 text-right">{{ $data->pek_lain_lain ?? 0 }}</td></tr>
 
                             <tr class="border-b"><td class="p-3 font-semibold text-gray-800" colspan="2">5. Agama</td></tr>
-                            <tr class="border-b"><td class="p-3 pl-6">C. Protestan</td><td class="p-3 text-right">{{ $agama_protestan }}</td></tr>
-                            {{-- Tambahkan agama lain jika ada datanya --}}
+                            <tr class="border-b"><td class="p-3 pl-6">A. Islam</td><td class="p-3 text-right">{{ $data->agama_islam ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">B. Protestan</td><td class="p-3 text-right">{{ $data->agama_protestan ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">C. Katolik</td><td class="p-3 text-right">{{ $data->agama_katolik ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">D. Hindu</td><td class="p-3 text-right">{{ $data->agama_hindu ?? 0 }}</td></tr>
+                            <tr class="border-b"><td class="p-3 pl-6">E. Budha</td><td class="p-3 text-right">{{ $data->agama_budha ?? 0 }}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -179,7 +128,60 @@
     @include('layouts.partials.footer')
     @include('layouts.partials.back-to-top')
 
-    {{-- **SCRIPT UNTUK PIE CHART** --}}
+    {{-- **SCRIPT UNTUK PIE CHART (DINAMIS & DIURUTKAN)** --}}
+    
+    @php
+        // Logika PHP untuk memproses data SEBELUM dikirim ke Chart.js
+        $chart_colors = json_encode(['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF']);
+
+        // 1. Data Pendidikan (Diurutkan berdasarkan 5 teratas)
+        $pendidikan_data = [
+            'Tidak Tamat SD' => $data->pend_tidak_sd ?? 0,
+            'SD' => $data->pend_sd ?? 0,
+            'SLTP' => $data->pend_sltp ?? 0,
+            'SLTA' => $data->pend_slta ?? 0,
+            'Diploma/Sarjana' => $data->pend_diploma ?? 0,
+        ];
+        arsort($pendidikan_data); // Urutkan dari terbesar ke terkecil
+        $pendidikan_labels = json_encode(array_keys($pendidikan_data));
+        $pendidikan_values = json_encode(array_values($pendidikan_data));
+
+        // 2. Data Pekerjaan (Diambil 5 teratas dari 15 kategori)
+        $pekerjaan_data = [
+            'Petani' => $data->pek_petani ?? 0,
+            'PNS' => $data->pek_pns ?? 0,
+            'Lain-lain' => $data->pek_lain_lain ?? 0,
+            'Buruh Tani' => $data->pek_buruh_tani ?? 0,
+            'Perangkat Desa' => $data->pek_perangkat_desa ?? 0,
+            'Pensiunan' => $data->pek_pensiunan ?? 0,
+            'Pedagang' => $data->pek_pedagang ?? 0,
+            'Peternak' => $data->pek_peternak ?? 0,
+            'Tukang Kayu' => $data->pek_tukang_kayu ?? 0,
+            'Penjahit' => $data->pek_penjahit ?? 0,
+            'Tukang Batu' => $data->pek_tukang_batu ?? 0,
+            'TNI/Polri' => $data->pek_tni_polri ?? 0,
+            'Pengrajin' => $data->pek_pengrajin ?? 0,
+            'Industri Kecil' => $data->pek_industri_kecil ?? 0,
+            'Buruh Industri' => $data->pek_buruh_industri ?? 0,
+        ];
+        arsort($pekerjaan_data); // Urutkan dari terbesar ke terkecil
+        $pekerjaan_data_top5 = array_slice($pekerjaan_data, 0, 5, true); // Ambil 5 teratas
+        $pekerjaan_labels = json_encode(array_keys($pekerjaan_data_top5));
+        $pekerjaan_values = json_encode(array_values($pekerjaan_data_top5));
+
+        // 3. Data Agama (Diurutkan berdasarkan 5 teratas)
+        $agama_data = [
+            'Protestan' => $data->agama_protestan ?? 0,
+            'Islam' => $data->agama_islam ?? 0,
+            'Katolik' => $data->agama_katolik ?? 0,
+            'Hindu' => $data->agama_hindu ?? 0,
+            'Budha' => $data->agama_budha ?? 0,
+        ];
+        arsort($agama_data); // Urutkan dari terbesar ke terkecil
+        $agama_labels = json_encode(array_keys($agama_data));
+        $agama_values = json_encode(array_values($agama_data));
+    @endphp
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             
@@ -188,93 +190,47 @@
             new Chart(ctxPendidikan, {
                 type: 'pie',
                 data: {
-                    labels: ['Tidak Tamat SD', 'SD', 'SLTP', 'SLTA', 'Diploma/Sarjana'],
+                    labels: {!! $pendidikan_labels !!}, // Data label yang sudah diurutkan
                     datasets: [{
                         label: 'Tingkat Pendidikan',
-                        data: [
-                            {{ $pend_tidak_sd }},
-                            {{ $pend_sd }},
-                            {{ $pend_sltp }},
-                            {{ $pend_slta }},
-                            {{ $pend_diploma }}
-                        ],
-                        backgroundColor: [
-                            '#FF6384', // Merah
-                            '#36A2EB', // Biru
-                            '#FFCE56', // Kuning
-                            '#4BC0C0', // Teal
-                            '#9966FF'  // Ungu
-                        ],
+                        data: {!! $pendidikan_values !!}, // Data value yang sudah diurutkan
+                        backgroundColor: {!! $chart_colors !!},
                         hoverOffset: 4
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    }
-                }
+                options: { responsive: true, plugins: { legend: { position: 'top' } } }
             });
 
             // --- Chart Pekerjaan ---
-            // Karena terlalu banyak kategori, kita kelompokkan "Lain-lain"
-            const pek_utama = {{ $pek_petani }} + {{ $pek_buruh_tani }};
-            const pek_pns_tni_perangkat = {{ $pek_pns }} + {{ $pek_tni_polri }} + {{ $pek_perangkat_desa }};
-            const pek_wiraswasta = {{ $pek_pedagang }} + {{ $pek_tukang_kayu }} + {{ $pek_tukang_batu }} + {{ $pek_penjahit }} + {{ $pek_pengrajin }} + {{ $pek_industri_kecil }} + {{ $pek_buruh_industri }};
-            const pek_lainnya = {{ $pek_peternak }} + {{ $pek_peralatan }} + {{ $pek_lain_lain }};
-
             const ctxPekerjaan = document.getElementById('chartPekerjaan').getContext('2d');
             new Chart(ctxPekerjaan, {
                 type: 'pie',
                 data: {
-                    labels: ['Petani/Buruh Tani', 'Aparatur (PNS/TNI/Perangkat)', 'Wiraswasta/Tukang', 'Lainnya'],
+                    labels: {!! $pekerjaan_labels !!}, // Label 5 teratas
                     datasets: [{
                         label: 'Mata Pencaharian',
-                        data: [pek_utama, pek_pns_tni_perangkat, pek_wiraswasta, pek_lainnya],
-                        backgroundColor: [
-                            '#2E8B57', // Hijau (Petani)
-                            '#4682B4', // Biru (Aparatur)
-                            '#DAA520', // Emas (Wiraswasta)
-                            '#D2B48C'  // Tan (Lainnya)
-                        ],
+                        data: {!! $pekerjaan_values !!}, // Value 5 teratas
+                        backgroundColor: {!! $chart_colors !!},
                         hoverOffset: 4
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    }
-                }
+                options: { responsive: true, plugins: { legend: { position: 'top' } } }
             });
 
              // --- Chart Agama ---
              const ctxAgama = document.getElementById('chartAgama').getContext('2d');
-            new Chart(ctxAgama, {
+             new Chart(ctxAgama, {
                 type: 'pie',
                 data: {
-                    labels: ['Protestan'], // Hanya data Protestan yang ada
+                    labels: {!! $agama_labels !!}, // Data label yang sudah diurutkan
                     datasets: [{
                         label: 'Agama',
-                        data: [{{ $agama_protestan }}], // Hanya 1 data
-                        backgroundColor: [
-                            '#8A2BE2' // Biru Violet
-                        ],
+                        data: {!! $agama_values !!}, // Data value yang sudah diurutkan
+                        backgroundColor: {!! $chart_colors !!},
                         hoverOffset: 4
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    }
-                }
+                options: { responsive: true, plugins: { legend: { position: 'top' } } }
             });
 
         });

@@ -13,24 +13,42 @@ return new class extends Migration
     {
         Schema::create('anggaran', function (Blueprint $table) {
             $table->id();
-            $table->year('tahun')->unique(); // Tahun Realisasi (misal: 2025)
+            $table->year('tahun');
+            $table->tinyInteger('semester')->default(1);
 
-            // Detail Pendapatan (Realisasi)
-            $table->decimal('dana_desa', 15, 2)->default(0);
-            $table->decimal('bagi_hasil', 15, 2)->default(0);
-            $table->decimal('alokasi_dana_desa', 15, 2)->default(0);
+            // 1. PENDAPATAN
+            $table->bigInteger('pendapatan_asli_desa_anggaran')->default(0);
+            $table->bigInteger('pendapatan_asli_desa_realisasi')->default(0);
+            
+            $table->bigInteger('pendapatan_transfer_anggaran')->default(0);
+            $table->bigInteger('pendapatan_transfer_realisasi')->default(0);
+            
+            $table->bigInteger('pendapatan_lain_lain_anggaran')->default(0);
+            $table->bigInteger('pendapatan_lain_lain_realisasi')->default(0);
 
-            // Detail Pembelanjaan (Realisasi)
-            $table->decimal('penyelenggaraan_pemerintahan', 15, 2)->default(0);
-            $table->decimal('pelaksanaan_pembangunan', 15, 2)->default(0);
-            $table->decimal('pembinaan_kemasyarakatan', 15, 2)->default(0);
-            $table->decimal('pemberdayaan_masyarakat', 15, 2)->default(0);
-            $table->decimal('penanggulangan_bencana', 15, 2)->default(0);
+            // 2. PEMBELANJAAN
+            $table->bigInteger('belanja_pegawai_anggaran')->default(0);
+            $table->bigInteger('belanja_pegawai_realisasi')->default(0);
+            
+            $table->bigInteger('belanja_barang_jasa_anggaran')->default(0);
+            $table->bigInteger('belanja_barang_jasa_realisasi')->default(0);
+            
+            $table->bigInteger('belanja_modal_anggaran')->default(0);
+            $table->bigInteger('belanja_modal_realisasi')->default(0);
+            
+            $table->bigInteger('belanja_tidak_terduga_anggaran')->default(0);
+            $table->bigInteger('belanja_tidak_terduga_realisasi')->default(0);
 
-            // Pembiayaan (Realisasi)
-            $table->decimal('pembiayaan', 15, 2)->default(0);
+            // 3. PEMBIAYAAN
+            $table->bigInteger('penerimaan_pembiayaan_anggaran')->default(0);
+            $table->bigInteger('penerimaan_pembiayaan_realisasi')->default(0);
+            
+            $table->bigInteger('pengeluaran_pembiayaan_anggaran')->default(0);
+            $table->bigInteger('pengeluaran_pembiayaan_realisasi')->default(0);
 
             $table->timestamps();
+
+            $table->unique(['tahun', 'semester']);
         });
     }
 

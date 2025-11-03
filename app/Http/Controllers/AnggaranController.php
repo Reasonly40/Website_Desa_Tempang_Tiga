@@ -4,21 +4,66 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggaran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Storage tetap di-import, meskipun tidak terpakai
+use Illuminate\Validation\Rule; // <-- TAMBAHKAN IMPORT INI
 
 class AnggaranController extends Controller
 {
     /**
-     * Menampilkan daftar realisasi anggaran.
+     * Validasi data.
+     */
+    private function validateData(Request $request, $anggaranId = null)
+    {
+        // Aturan validasi untuk composite unique key
+        $uniqueRule = Rule::unique('anggaran')->where(function ($query) use ($request) {
+            return $query->where('semester', $request->semester)
+                         ->where('tahun', $request->tahun);
+        });
+
+        // Abaikan ID saat ini jika sedang update
+        if ($anggaranId) {
+            $uniqueRule->ignore($anggaranId);
+        }
+        
+        $rules = [
+            'tahun' => ['required', 'integer', 'min:2000', $uniqueRule], // Validasi unique baru
+            'semester' => 'required|integer|in:1,2', // Validasi semester
+            
+            // ... (Semua validasi numeric lainnya tetap sama)
+            'pendapatan_asli_desa_anggaran' => 'required|numeric|min:0',
+            'pendapatan_asli_desa_realisasi' => 'required|numeric|min:0',
+            'pendapatan_transfer_anggaran' => 'required|numeric|min:0',
+            'pendapatan_transfer_realisasi' => 'required|numeric|min:0',
+            'pendapatan_lain_lain_anggaran' => 'required|numeric|min:0',
+            'pendapatan_lain_lain_realisasi' => 'required|numeric|min:0',
+            'belanja_pegawai_anggaran' => 'required|numeric|min:0',
+            'belanja_pegawai_realisasi' => 'required|numeric|min:0',
+            'belanja_barang_jasa_anggaran' => 'required|numeric|min:0',
+            'belanja_barang_jasa_realisasi' => 'required|numeric|min:0',
+            'belanja_modal_anggaran' => 'required|numeric|min:0',
+            'belanja_modal_realisasi' => 'required|numeric|min:0',
+            'belanja_tidak_terduga_anggaran' => 'required|numeric|min:0',
+            'belanja_tidak_terduga_realisasi' => 'required|numeric|min:0',
+            'penerimaan_pembiayaan_anggaran' => 'required|numeric|min:0',
+            'penerimaan_pembiayaan_realisasi' => 'required|numeric|min:0',
+            'pengeluaran_pembiayaan_anggaran' => 'required|numeric|min:0',
+            'pengeluaran_pembiayaan_realisasi' => 'required|numeric|min:0',
+        ];
+
+        return $request->validate($rules);
+    }
+
+    /**
+     * Menampilkan daftar anggaran.
      */
     public function index()
     {
-        $anggaran = Anggaran::latest()->paginate(10);
+        // Urutkan berdasarkan tahun, LALU berdasarkan semester
+        $anggaran = Anggaran::orderBy('tahun', 'desc')->orderBy('semester', 'desc')->paginate(10);
         return view('admin.anggaran.index', compact('anggaran'));
     }
 
     /**
-     * Menampilkan form untuk menginput realisasi anggaran baru.
+     * Menampilkan form untuk membuat anggaran baru.
      */
     public function create()
     {
@@ -26,79 +71,39 @@ class AnggaranController extends Controller
     }
 
     /**
-     * Menyimpan data realisasi anggaran baru ke database.
-     * PERBAIKAN: Disesuaikan dengan struktur tabel input angka.
+     * Menyimpan anggaran baru.
      */
     public function store(Request $request)
     {
-        // Validasi untuk semua kolom input angka
-        $validatedData = $request->validate([
-            'tahun' => 'required|integer|min:2000|unique:anggaran,tahun', // Tahun harus unik di tabel 'anggaran'
-            'dana_desa' => 'required|numeric|min:0',
-            'bagi_hasil' => 'required|numeric|min:0',
-            'alokasi_dana_desa' => 'required|numeric|min:0',
-            'penyelenggaraan_pemerintahan' => 'required|numeric|min:0',
-            'pelaksanaan_pembangunan' => 'required|numeric|min:0',
-            'pembinaan_kemasyarakatan' => 'required|numeric|min:0',
-            'pemberdayaan_masyarakat' => 'required|numeric|min:0',
-            'penanggulangan_bencana' => 'required|numeric|min:0',
-            'pembiayaan' => 'required|numeric|min:0',
-        ]);
-
-        // Buat entri database
-        // Pastikan Model 'Anggaran' Anda memiliki semua field ini di $fillable
+        $validatedData = $this->validateData($request);
         Anggaran::create($validatedData);
-
-        return redirect()->route('admin.anggaran.index')->with('success', 'Data realisasi anggaran berhasil disimpan!');
+        return redirect()->route('admin.anggaran.index')->with('success', 'Data APBDes berhasil ditambahkan!');
     }
 
     /**
-     * Menampilkan form untuk mengedit realisasi anggaran.
+     * Menampilkan form untuk mengedit anggaran.
      */
     public function edit(Anggaran $anggaran)
     {
-        // Pastikan Model 'Anggaran' menggunakan 'protected $table = 'anggaran';'
         return view('admin.anggaran.edit', compact('anggaran'));
     }
 
     /**
-     * Memperbarui data realisasi anggaran di database.
-     * PERBAIKAN: Disesuaikan dengan struktur tabel input angka.
+     * Update data anggaran.
      */
     public function update(Request $request, Anggaran $anggaran)
     {
-        // Validasi untuk update
-        $validatedData = $request->validate([
-            // Izinkan tahun yang sama jika itu adalah data miliknya sendiri
-            'tahun' => 'required|integer|min:2000|unique:anggaran,tahun,' . $anggaran->id,
-            'dana_desa' => 'required|numeric|min:0',
-            'bagi_hasil' => 'required|numeric|min:0',
-            'alokasi_dana_desa' => 'required|numeric|min:0',
-            'penyelenggaraan_pemerintahan' => 'required|numeric|min:0',
-            'pelaksanaan_pembangunan' => 'required|numeric|min:0',
-            'pembinaan_kemasyarakatan' => 'required|numeric|min:0',
-            'pemberdayaan_masyarakat' => 'required|numeric|min:0',
-            'penanggulangan_bencana' => 'required|numeric|min:0',
-            'pembiayaan' => 'required|numeric|min:0',
-        ]);
-
-        // Tidak ada file yang perlu di-handle, langsung update
+        $validatedData = $this->validateData($request, $anggaran->id);
         $anggaran->update($validatedData);
-
-        return redirect()->route('admin.anggaran.index')->with('success', 'Data realisasi anggaran berhasil diperbarui!');
+        return redirect()->route('admin.anggaran.index')->with('success', 'Data APBDes berhasil diperbarui!');
     }
 
     /**
-     * Menghapus data realisasi anggaran dari database.
-     * PERBAIKAN: Disesuaikan dengan struktur tabel input angka.
+     * Hapus data anggaran.
      */
     public function destroy(Anggaran $anggaran)
     {
-        // Tidak ada file yang perlu dihapus dari storage
-        
-        // Hapus entri dari database
         $anggaran->delete();
-
-        return redirect()->route('admin.anggaran.index')->with('success', 'Data realisasi anggaran berhasil dihapus.');
+        return redirect()->route('admin.anggaran.index')->with('success', 'Data APBDes berhasil dihapus.');
     }
 }

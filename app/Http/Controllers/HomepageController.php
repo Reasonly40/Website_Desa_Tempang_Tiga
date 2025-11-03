@@ -115,5 +115,12 @@ class HomepageController extends Controller
         }
         return view('profil-desa.demografis', compact('data'));
     }
+
+    public function apbdes()
+    {
+        $anggaran = Anggaran::orderBy('tahun', 'desc')->orderBy('semester', 'desc')->first();
+
+        return view('apbdes', compact('anggaran'));
+    }
 }
 

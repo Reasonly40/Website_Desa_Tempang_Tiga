@@ -9,13 +9,6 @@ class Anggaran extends Model
 {
     use HasFactory;
 
-    /**
-     * PERBAIKAN: Menentukan nama tabel secara manual.
-     *
-     * Secara default, Laravel akan mencari tabel 'anggarans' (plural).
-     * Baris ini memberi tahu Laravel bahwa nama tabel Anda adalah 'anggaran' (singular).
-     * Ini akan memperbaiki error "Table 'anggarans' doesn't exist".
-     */
     protected $table = 'anggaran';
 
     /**
@@ -25,15 +18,27 @@ class Anggaran extends Model
      */
     protected $fillable = [
         'tahun',
-        'dana_desa',
-        'bagi_hasil',
-        'alokasi_dana_desa',
-        'penyelenggaraan_pemerintahan',
-        'pelaksanaan_pembangunan',
-        'pembinaan_kemasyarakatan',
-        'pemberdayaan_masyarakat',
-        'penanggulangan_bencana',
-        'pembiayaan',
+        'semester',
+        // Pendapatan
+        'pendapatan_asli_desa_anggaran',
+        'pendapatan_asli_desa_realisasi',
+        'pendapatan_transfer_anggaran',
+        'pendapatan_transfer_realisasi',
+        'pendapatan_lain_lain_anggaran',
+        'pendapatan_lain_lain_realisasi',
+        // Belanja
+        'belanja_pegawai_anggaran',
+        'belanja_pegawai_realisasi',
+        'belanja_barang_jasa_anggaran',
+        'belanja_barang_jasa_realisasi',
+        'belanja_modal_anggaran',
+        'belanja_modal_realisasi',
+        'belanja_tidak_terduga_anggaran',
+        'belanja_tidak_terduga_realisasi',
+        // Pembiayaan
+        'penerimaan_pembiayaan_anggaran',
+        'penerimaan_pembiayaan_realisasi',
+        'pengeluaran_pembiayaan_anggaran',
+        'pengeluaran_pembiayaan_realisasi',
     ];
 }
-
