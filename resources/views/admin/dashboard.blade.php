@@ -10,32 +10,59 @@
     <h4>Ringkasan Konten</h4>
     <div class="dashboard-grid">
 
+        {{-- Card Statistik Kegiatan --}}
         <div class="stat-card">
-            <h3>{{ $jumlahKegiatan }}</h3>
+            {{-- Menampilkan jumlah kegiatan, pastikan variabel $jumlahKegiatan dikirim dari DashboardController --}}
+            <h3>{{ $jumlahKegiatan ?? 0 }}</h3>
             <p>Total Kegiatan</p>
+            {{-- Tautan ke halaman daftar kegiatan --}}
             <a href="{{ route('admin.kegiatan.index') }}">Lihat Detail &rarr;</a>
         </div>
 
+        {{-- Card Statistik Produk --}}
         <div class="stat-card">
-            <h3>{{ $jumlahProduk }}</h3>
+            {{-- Menampilkan jumlah produk, pastikan variabel $jumlahProduk dikirim dari DashboardController --}}
+            <h3>{{ $jumlahProduk ?? 0 }}</h3>
             <p>Total Produk</p>
-            {{-- DISESUAIKAN --}}
+            {{-- Tautan ke halaman daftar produk --}}
             <a href="{{ route('admin.produk.index') }}">Lihat Detail &rarr;</a>
         </div>
 
+        {{-- Card Statistik Anggaran --}}
         <div class="stat-card">
-            <h3>{{ $jumlahAnggaran }}</h3>
+            {{-- Menampilkan jumlah dokumen anggaran, pastikan variabel $jumlahAnggaran dikirim dari DashboardController --}}
+            <h3>{{ $jumlahAnggaran ?? 0 }}</h3>
             <p>Dokumen Anggaran</p>
-            {{-- DISESUAIKAN --}}
+            {{-- Tautan ke halaman daftar anggaran --}}
             <a href="{{ route('admin.anggaran.index') }}">Lihat Detail &rarr;</a>
         </div>
 
+        {{-- Card Statistik Perencanaan --}}
         <div class="stat-card">
-            <h3>{{ $jumlahPerencanaan }}</h3>
+            {{-- Menampilkan jumlah dokumen perencanaan, pastikan variabel $jumlahPerencanaan dikirim dari DashboardController --}}
+            <h3>{{ $jumlahPerencanaan ?? 0 }}</h3>
             <p>Dokumen Perencanaan</p>
-            {{-- DISESUAIKAN --}}
+            {{-- Tautan ke halaman daftar perencanaan --}}
             <a href="{{ route('admin.perencanaan.index') }}">Lihat Detail &rarr;</a>
         </div>
 
+        {{-- Card Statistik Berita (Baru Ditambahkan) --}}
+        <div class="stat-card">
+            {{-- Menampilkan jumlah berita, pastikan variabel $jumlahBerita dikirim dari DashboardController --}}
+            <h3>{{ $jumlahBerita ?? 0 }}</h3> {{-- Menggunakan null coalescing operator jika variabel belum ada --}}
+            <p>Total Berita</p>
+            {{-- Tautan ke halaman daftar berita --}}
+            <a href="{{ route('admin.berita.index') }}">Lihat Detail &rarr;</a>
+        </div>
+
+        {{-- Tambahkan card lain di sini jika ada fitur baru --}}
+
     </div>
 @endsection
+
+{{-- Anda bisa menambahkan style khusus untuk halaman dashboard di sini jika perlu --}}
+{{-- @push('styles')
+<style>
+    /* CSS tambahan untuk dashboard */
+</style>
+@endpush --}}

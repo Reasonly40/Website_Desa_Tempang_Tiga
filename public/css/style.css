@@ -2,18 +2,21 @@
 /* == Global & Palet Warna == */
 /* ================================== */
 :root {
-    --primary-color: #006400;   /* Hijau Hutan */
-    --background-color: #FFFFFF; /* Putih Bersih */
-    --secondary-bg-color: #E9ECEF; /* Abu-abu Terang */
-    --text-color: #1C3D5A;      /* Biru Dongker */
-    --light-color: #FFFFFF;     /* Putih untuk kontras */
-    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Palet Elegan & Mewah (warna tetap) */
+    --primary-color: #355E3B;   /* Hijau Zamrud */
+    --background-color: #FFFDD0; /* Putih Krim */
+    --accent-color: #D4AF37;    /* Emas Antik */
+    --text-color: #4E342E;      /* Cokelat Tua */
+    --light-color: #FFFFFF;     /* Putih Bersih (untuk kontras) */
     
-    /* Warna Admin */
-    --admin-dark: #343a40;
-    --admin-light: #f8f9fa;
+    /* [PENYESUAIAN] Mengembalikan font umum untuk aplikasi */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    
+    /* Warna Admin (disesuaikan agar selaras) */
+    --admin-dark: var(--primary-color); /* Sidebar hijau zamrud */
+    --admin-light: #f4f4f4; /* Latar belakang admin lebih netral */
     --danger-color: #dc3545;
-    --warning-color: #ffc107;
+    --warning-color: #ffc107; /* Biarkan kuning untuk edit */
 }
 
 * { 
@@ -48,8 +51,9 @@ h2 { text-align: center; }
 section { 
     padding: 40px 0; 
 }
+/* Latar belakang selang-seling pakai Putih Bersih untuk kontras */
 section:nth-child(even) { 
-    background-color: var(--secondary-bg-color); 
+    background-color: var(--light-color); 
 }
 
 header {
@@ -64,7 +68,7 @@ header .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color)
 nav ul { list-style: none; display: flex; }
 nav ul li { margin-left: 25px; }
 nav a { color: var(--text-color); text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
-nav a:hover { color: var(--primary-color); }
+nav a:hover { color: var(--accent-color); } /* Hover warna emas */
 
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1500x600.png?text=Selamat+Datang+di+Desa+Kami') no-repeat center center/cover;
@@ -76,7 +80,7 @@ nav a:hover { color: var(--primary-color); }
 
 .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 .card {
-    background: var(--light-color);
+    background: var(--light-color); /* Kartu pakai putih bersih */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
@@ -85,13 +89,14 @@ nav a:hover { color: var(--primary-color); }
 .card:hover { transform: translateY(-5px); }
 .card img { width: 100%; height: 200px; object-fit: cover; }
 .card-content { padding: 20px; }
-.card-content h3 { margin-top: 0; }
+.card-content h3 { margin-top: 0; color: var(--primary-color); }
 .transparansi-item { background: var(--light-color); padding: 2rem; border-radius: 8px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
+/* Tombol utama pakai warna emas */
 .btn {
     display: inline-block;
-    background: var(--primary-color);
-    color: var(--light-color);
+    background: var(--accent-color);
+    color: var(--text-color); /* Teks coklat tua */
     padding: 12px 25px;
     text-decoration: none;
     border-radius: 5px;
@@ -100,9 +105,9 @@ nav a:hover { color: var(--primary-color); }
     border: none;
     transition: background 0.3s ease;
 }
-.btn:hover { background: #004d00; }
+.btn:hover { background: #C3A030; } /* Versi gelap Emas Antik */
 
-footer { background: var(--text-color); color: var(--secondary-bg-color); text-align: center; padding: 2rem 0; }
+footer { background: var(--text-color); color: var(--background-color); text-align: center; padding: 2rem 0; }
 
 /* ================================== */
 /* == Layout Admin == */
@@ -113,18 +118,18 @@ body.admin-body {
 }
 .sidebar {
     width: 250px;
-    background-color: var(--admin-dark);
-    color: white;
+    background-color: var(--admin-dark); /* Sidebar pakai Hijau Zamrud */
+    color: var(--light-color); /* Teks sidebar putih */
     min-height: 100vh;
     padding: 20px;
 }
-.sidebar h3 { text-align: center; margin-bottom: 30px; color: #fff; }
-.sidebar a { display: block; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-bottom: 5px; }
-.sidebar a:hover { background-color: #495057; }
-.sidebar hr { border-color: #495057; margin: 10px 0; }
+.sidebar h3 { text-align: center; margin-bottom: 30px; color: var(--light-color); }
+.sidebar a { display: block; color: var(--light-color); padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-bottom: 5px; transition: background-color 0.3s ease; }
+.sidebar a:hover { background-color: #4A6E4F; } /* Hover hijau lebih terang */
+.sidebar hr { border-color: #4A6E4F; margin: 10px 0; }
 
 .main-content { flex-grow: 1; padding: 40px; }
-.content-box { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+.content-box { background: var(--light-color); padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
 
 /* ================================== */
 /* == Halaman Admin: Dashboard == */
@@ -136,8 +141,8 @@ body.admin-body {
     margin-top: 20px;
 }
 .stat-card {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
+    background-color: var(--light-color); /* Stat card putih */
+    border: 1px solid #eee;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -145,7 +150,7 @@ body.admin-body {
 .stat-card h3 { font-size: 2.5rem; color: var(--primary-color); margin: 0; }
 .stat-card p { font-size: 1rem; color: #6c757d; margin: 5px 0 15px 0; }
 .stat-card a { text-decoration: none; color: var(--primary-color); font-weight: bold; font-size: 0.9em; }
-.stat-card a:hover { text-decoration: underline; }
+.stat-card a:hover { text-decoration: underline; color: var(--accent-color); }
 
 /* ================================== */
 /* == Halaman Admin: Tabel Data == */
@@ -160,34 +165,35 @@ body.admin-body {
 /* == Halaman Admin: Formulir == */
 /* ================================== */
 .form-group { margin-bottom: 15px; }
-.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-color); }
 .form-group input, .form-group textarea {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-family: inherit;
+    font-family: inherit; /* Ini akan mengikuti font body */
     font-size: 1rem;
+    color: var(--text-color);
 }
 .form-group input[type="file"] { padding: 3px; }
 
 /* ================================== */
 /* == Tombol & Notifikasi Admin == */
 /* ================================== */
-.btn-submit { background-color: var(--primary-color); color: #fff; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 14px; }
-.btn-submit:hover { background-color: #004d00; }
-.btn-edit { background-color: var(--warning-color); color: #333; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 14px; }
+.btn-submit { background-color: var(--accent-color); color: var(--text-color); padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 14px; transition: background-color 0.3s ease; }
+.btn-submit:hover { background-color: #C3A030; }
+.btn-edit { background-color: var(--warning-color); color: #333; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 14px; transition: background-color 0.3s ease;}
 .btn-edit:hover { background-color: #e0a800; }
-.btn-delete { background-color: var(--danger-color); color: #fff; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; }
+.btn-delete { background-color: var(--danger-color); color: #fff; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease;}
 .btn-delete:hover { background-color: #c82333; }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #E6F4EA; /* Hijau muda yang cocok */
+    color: var(--primary-color);
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-    border: 1px solid #c3e6cb;
+    border: 1px solid #B8DACD;
 }
 .error-message { color: var(--danger-color); font-size: 0.9em; margin-top: 5px; }
 
@@ -208,16 +214,14 @@ body.admin-body {
     .main-content { padding: 20px; }
 }
 
-/* CSS untuk Peta Leaflet */
+/* CSS untuk Peta Leaflet & iframe */
 #map { 
-    height: 300px; /* Atur tinggi peta sesuai selera */
+    height: 300px;
     width: 100%;
-    z-index: 1; /* Kadang diperlukan agar peta terlihat */
+    z-index: 1; 
 }
-
-/* Membuat iframe Google Maps di dalam card menjadi responsif */
 .card iframe {
-    width: 100%;     /* Lebar penuh mengisi card */
-    height: 300px;   /* Atur tinggi peta (sesuaikan dengan selera) */
-    display: block;  /* (Opsional) Menghilangkan spasi ekstra di bawah iframe */
+    width: 100%;
+    height: 300px;
+    display: block;
 }

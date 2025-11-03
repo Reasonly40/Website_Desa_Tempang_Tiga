@@ -27,15 +27,18 @@
             @forelse ($kegiatan as $item)
                 <tr>
                     <td>
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" width="100">
+                        {{-- PERBAIKAN: Ganti 'image' menjadi 'gambar' dan 'title' menjadi 'judul' --}}
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" width="100">
                     </td>
-                    <td>{{ $item->title }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->activity_date)->format('d F Y') }}</td>
+                    {{-- PERBAIKAN: Ganti 'title' menjadi 'judul' --}}
+                    <td>{{ $item->judul }}</td>
+                    {{-- PERBAIKAN: Ganti 'activity_date' menjadi 'tanggal' --}}
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d F Y') }}</td>
                     <td>
-                        {{-- DISESUAIKAN: Link Edit sekarang menggunakan rute yang benar --}}
+                        {{-- Link Edit sudah benar --}}
                         <a href="{{ route('admin.kegiatan.edit', $item->id) }}" class="btn-edit">Edit</a>
                         
-                        {{-- Tombol Hapus --}}
+                        {{-- Tombol Hapus sudah benar --}}
                         <form action="{{ route('admin.kegiatan.destroy', $item->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
