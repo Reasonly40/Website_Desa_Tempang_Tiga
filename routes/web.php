@@ -91,7 +91,8 @@ Route::prefix('admin')
         Route::resource('anggaran', AnggaranController::class)->except(['show'])->names('anggaran');
         
         // CRUD Struktur Organisasi (Aparatur Desa)
-        Route::resource('aparatur', AparaturDesaController::class)->except(['show'])->names('aparatur');
+        Route::resource('aparatur', \App\Http\Controllers\AparaturDesaController::class)
+            ->except(['create', 'store', 'destroy', 'show']);
 
         // Edit Demografis
         Route::get('demografi', [DataDemografiController::class, 'edit'])->name('demografi.edit');

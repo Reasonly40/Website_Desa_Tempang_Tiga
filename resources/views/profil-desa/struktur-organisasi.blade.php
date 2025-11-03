@@ -30,8 +30,7 @@
 
                 @forelse ($sotk as $aparat)
                     <div class="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-                        <div class="aspect-w-1 aspect-h-1 bg-gray-100">
-                            {{-- Jika ada foto, tampilkan dari storage. Jika tidak, pakai placeholder --}}
+                        <div class="aspect-square bg-gray-100">
                             <img src="{{ $aparat->foto ? Storage::url($aparat->foto) : $placeholder }}" 
                                  alt="{{ $aparat->nama }}" 
                                  class="object-cover w-full h-full" 
@@ -61,7 +60,7 @@
                     
                     @forelse ($bpd as $aparat)
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-                            <div class="aspect-w-1 aspect-h-1 bg-gray-100">
+                            <div class="aspect-square bg-gray-100">
                                 <img src="{{ $aparat->foto ? Storage::url($aparat->foto) : $placeholder }}" 
                                      alt="{{ $aparat->nama }}" 
                                      class="object-cover w-full h-full" 

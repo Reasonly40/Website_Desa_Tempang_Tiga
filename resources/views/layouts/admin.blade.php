@@ -122,16 +122,6 @@
             {{-- Area Konten Utama --}}
             <main class="flex-1 relative overflow-y-auto focus:outline-none">
                 <div class="p-6"> 
-                    @if(session('success'))
-                        <div class="alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if(session('error') || $errors->any())
-                        <div class="alert-danger">
-                            {{ session('error') ?? 'Terjadi kesalahan. Silakan periksa input Anda.' }}
-                        </div>
-                    @endif
 
                     @yield('content')
                 </div>
