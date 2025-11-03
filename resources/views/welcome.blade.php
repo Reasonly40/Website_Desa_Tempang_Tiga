@@ -7,13 +7,13 @@
     @vite('resources/css/app.css')
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> {{-- Tambahkan AlpineJS untuk toggle menu --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="font-sans antialiased bg-white text-gray-800">
 
+    @include('layouts.partials.back-to-top')
     @include('layouts.partials.navbar')
 
-    {{-- Hero Section --}}
     <section class="relative text-center bg-white pt-10 md:pt-20"> {{-- Kurangi padding top di mobile --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-left md:ml-4 lg:ml-8">
@@ -26,7 +26,6 @@
             </div>
         </div>
 
-        {{-- Gambar Hero --}}
         <div class="relative mt-6 md:mt-0">
             <img
                 src="{{ asset('images/hero-bg.jpg') }}"
@@ -35,24 +34,19 @@
             >
         </div>
 
-        {{-- Profil singkat --}}
         <section id="profil" class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
             <div class="bg-white rounded-xl shadow-lg p-6 md:p-12">
-                {{-- Judul --}}
                 <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-gray-900 text-center"
                     style="font-family: 'Merriweather', serif;">
                     PROFIL SINGKAT DESA
                 </h2>
 
-                {{-- Dua kolom --}}
                 <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-                    {{-- Kiri --}}
                     <div>
                         <p class="text-gray-700 leading-relaxed mb-6 text-left text-sm sm:text-base"> 
                             Desa Tempang Tiga adalah salah satu desa di Kecamatan Langowan Utara yang dikenal dengan semangat gotong royong dan potensi pertanian yang melimpah.
                         </p>
 
-                        {{-- Peta --}}
                         <div class="w-full h-48 sm:h-64 bg-gray-100 rounded-lg overflow-hidden shadow-sm"> {{-- Sesuaikan tinggi peta --}}
                             <iframe
                                 src="https://maps.google.com/maps?q=Desa%20Tempang%20Tiga%2C%20Langowan%20Utara&t=&z=15&ie=UTF8&iwloc=&output=embed" {{-- Ganti URL Embed Map--}}
@@ -66,26 +60,20 @@
                         </div>
                     </div>
 
-                    {{-- Kanan --}}
                     <div class="flex flex-col justify-between space-y-6">
-                        {{-- Batas Wilayah --}}
                         <div class="space-y-2 text-xs sm:text-sm md:text-base pl-2 divide-y divide-gray-300">
-                            {{-- Item Utara --}}
                             <div class="flex justify-between items-center py-2">
                                 <p class="text-gray-600">Sebelah Utara</p>
                                 <p class="font-semibold text-gray-800 text-right">Desa Tolok & Desa Totolan</p>
                             </div>
-                            {{-- Item Timur --}}
                             <div class="flex justify-between items-center py-2">
                                 <p class="text-gray-600">Sebelah Timur</p>
                                 <p class="font-semibold text-gray-800 text-right">Desa Panasen</p>
                             </div>
-                            {{-- Item Selatan --}}
                             <div class="flex justify-between items-center py-2">
                                 <p class="text-gray-600">Sebelah Selatan</p>
                                 <p class="font-semibold text-gray-800 text-right">Desa Karumenga & Desa Sumarayar</p>
                             </div>
-                            {{-- Item Barat --}}
                             <div class="flex justify-between items-center py-2">
                                 <p class="text-gray-600">Sebelah Barat</p>
                                 <p class="font-semibold text-gray-800 text-right">Desa Tempang</p>
@@ -108,12 +96,10 @@
         </section>
     </section>
 
-    {{-- Statistik Desa --}}
     <section id="statistik" class="bg-gray-50 py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-5 items-center gap-8 md:gap-12 text-center md:text-left"> {{-- Tambah gap md --}}
 
-                {{-- Kiri: Judul dan Tombol --}}
                 <div class="md:col-span-2 space-y-4">
                     <h2 class="text-xl sm:text-2xl font-bold text-gray-900" style="font-family: 'Merriweather', serif;">
                         Statistik Desa
@@ -124,19 +110,15 @@
                     </a>
                 </div>
 
-                {{-- Kanan: Angka Statistik --}}
                 <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:justify-items-end md:text-right">
-                    {{-- Statistik Penduduk --}}
                     <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none"> {{-- Styling card di mobile --}}
                         <p class="text-4xl md:text-5xl font-light text-gray-900">1000+</p>
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Penduduk</p>
                     </div>
-                    {{-- Statistik Keluarga --}}
                     <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
                         <p class="text-4xl md:text-5xl font-light text-gray-900">300+</p>
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Keluarga</p>
                     </div>
-                    {{-- Statistik Jaga --}}
                     <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
                         <p class="text-4xl md:text-5xl font-light text-gray-900">4</p>
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jaga</p>
@@ -146,7 +128,6 @@
         </div>
     </section>
 
-    {{-- Berita Terbaru Desa --}}
     <section id="berita" class="bg-white py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10 md:mb-12" style="font-family: 'Merriweather', serif;">
@@ -231,7 +212,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-                {{-- Card Pelaksanaan --}}
                 <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100"> {{-- Kurangi shadow hover, sesuaikan padding --}}
                     <h3 class="text-xl md:text-2xl font-semibold text-green-800 text-center mb-1 md:mb-2">Pelaksanaan</h3> 
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p> 
@@ -244,7 +224,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                        {{-- Item Belanja --}}
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Belanja</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 3.568.388.700 | Rp 3.568.388.700</p>
@@ -253,7 +232,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                        {{-- Item Pembiayaan --}}
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pembiayaan</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 2.761.320 | Rp 2.761.320</p>
@@ -265,12 +243,10 @@
                     </div>
                 </div>
 
-                {{-- Card Pendapatan --}}
                 <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100">
                     <h3 class="text-xl md:text-2xl font-semibold text-green-800 text-center mb-1 md:mb-2">Pendapatan</h3>
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p>
                     <div class="space-y-4 md:space-y-6">
-                         {{-- Item Dana Desa --}}
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Dana Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 1.029.810.000 | Rp 1.029.810.000</p>
@@ -279,7 +255,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                         {{-- Item Bagi Hasil --}}
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Bagi Hasil Pajak & Retribusi</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 46.292.600 | Rp 46.292.600</p>
@@ -288,7 +263,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                         {{-- Item Alokasi Dana Desa --}}
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Alokasi Dana Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 2.492.286.100 | Rp 2.492.286.100</p>
@@ -300,12 +274,10 @@
                     </div>
                 </div>
 
-                {{-- Card Pembelanjaan --}}
                 <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-8 border border-green-100">
                     <h3 class="text-xl md:text-2xl font-semibold text-green-800 text-center mb-1 md:mb-2">Pembelanjaan</h3>
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p>
                     <div class="space-y-4 md:space-y-6">
-                        {{-- Item Penyelenggaraan Pemerintahan --}}
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Penyelenggaraan Pemerintahan Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 1.516.050.228 | Rp 1.516.050.228</p>
@@ -314,7 +286,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                         {{-- Item Pelaksanaan Pembangunan --}}
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pelaksanaan Pembangunan Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 689.102.662 | Rp 689.102.662</p>
@@ -323,7 +294,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                         {{-- Item Pembinaan Kemasyarakatan --}}
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pembinaan Kemasyarakatan</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 424.631.110 | Rp 424.631.110</p>
@@ -332,7 +302,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                         {{-- Item Pemberdayaan Masyarakat --}}
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pemberdayaan Masyarakat</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 776.974.700 | Rp 776.974.700</p>
@@ -341,7 +310,6 @@
                             </div>
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">100%</p>
                         </div>
-                         {{-- Item Penanggulangan Bencana --}}
                          <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Penanggulangan Bencana & Mendesak</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">Rp 161.630.000 | Rp 161.630.000</p>

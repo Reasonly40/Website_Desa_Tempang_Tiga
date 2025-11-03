@@ -22,6 +22,50 @@ use App\Http\Controllers\PerencanaanController;
 */
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
+Route::get('/visi-misi', function () {
+    return view('profil-desa.visi-misi');
+})->name('visi-misi');
+
+Route::get('/sejarah', function () {
+    return view('profil-desa.sejarah');
+})->name('sejarah');
+
+Route::get('/peta', function () {
+    return view('profil-desa.peta');
+})->name('peta');
+
+Route::get('/struktur-organisasi', function () {
+    return view('profil-desa.struktur-organisasi');
+})->name('struktur-organisasi');
+
+Route::get('/demografis', function () {
+    return view('profil-desa.demografis');
+})->name('demografis');
+
+Route::get('/potensi', function () {
+    return view('potensi');
+})->name('potensi');
+
+Route::get('/apbdes', function () {
+    return view('apbdes');
+})->name('apbdes');
+
+Route::get('/produk', function () {
+    return view('produk');
+})->name('produk');
+
+Route::get('/kegiatan', function () {
+    return view('kegiatan');
+})->name('kegiatan');
+
+Route::get('/kontak', function () {
+    return view('kontak');
+})->name('kontak');
+
+Route::get('/pengembang', function () {
+    return view('pengembang');
+})->name('pengembang');
+
 
 /*
 |--------------------------------------------------------------------------
