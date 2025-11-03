@@ -45,11 +45,6 @@
                Dashboard
             </a>
             <hr>
-
-            <a href="{{ route('admin.berita.index') }}" 
-               class="{{ request()->routeIs('admin.berita.*') ? 'active' : '' }}">
-               Berita
-            </a>
             
             <a href="{{ route('admin.kegiatan.index') }}"
                class="{{ request()->routeIs('admin.kegiatan.*') ? 'active' : '' }}">

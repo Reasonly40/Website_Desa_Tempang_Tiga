@@ -46,15 +46,6 @@
             <a href="{{ route('admin.perencanaan.index') }}">Lihat Detail &rarr;</a>
         </div>
 
-        {{-- Card Statistik Berita (Baru Ditambahkan) --}}
-        <div class="stat-card">
-            {{-- Menampilkan jumlah berita, pastikan variabel $jumlahBerita dikirim dari DashboardController --}}
-            <h3>{{ $jumlahBerita ?? 0 }}</h3> {{-- Menggunakan null coalescing operator jika variabel belum ada --}}
-            <p>Total Berita</p>
-            {{-- Tautan ke halaman daftar berita --}}
-            <a href="{{ route('admin.berita.index') }}">Lihat Detail &rarr;</a>
-        </div>
-
         {{-- Tambahkan card lain di sini jika ada fitur baru --}}
 
     </div>
