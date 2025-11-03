@@ -24,6 +24,51 @@ use App\Http\Controllers\ProfileController;
 */
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
+<<<<<<< HEAD
+Route::get('/visi-misi', function () {
+    return view('profil-desa.visi-misi');
+})->name('visi-misi');
+
+Route::get('/sejarah', function () {
+    return view('profil-desa.sejarah');
+})->name('sejarah');
+
+Route::get('/peta', function () {
+    return view('profil-desa.peta');
+})->name('peta');
+
+Route::get('/struktur-organisasi', function () {
+    return view('profil-desa.struktur-organisasi');
+})->name('struktur-organisasi');
+
+Route::get('/demografis', function () {
+    return view('profil-desa.demografis');
+})->name('demografis');
+
+Route::get('/potensi', function () {
+    return view('potensi');
+})->name('potensi');
+
+Route::get('/apbdes', function () {
+    return view('apbdes');
+})->name('apbdes');
+
+Route::get('/produk', function () {
+    return view('produk');
+})->name('produk');
+
+Route::get('/kegiatan', function () {
+    return view('kegiatan');
+})->name('kegiatan');
+
+Route::get('/kontak', function () {
+    return view('kontak');
+})->name('kontak');
+
+Route::get('/pengembang', function () {
+    return view('pengembang');
+})->name('pengembang');
+=======
 /*
 |--------------------------------------------------------------------------
 | Rute Dasbor Bawaan Breeze
@@ -32,6 +77,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('home');
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+>>>>>>> 3a4af36b42af409a87a2cce683178125bdacde32
 
 
 /*
