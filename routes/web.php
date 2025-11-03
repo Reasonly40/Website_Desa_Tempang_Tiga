@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth; // Ditambahkan untuk check()
 
 // --- Controller untuk Halaman Publik ---
 use App\Http\Controllers\HomepageController;
@@ -11,7 +10,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AnggaranController;
-use App\Http\Controllers\PerencanaanController;
+use App\Http\Controllers\AparaturDesaController;
+use App\Http\Controllers\DataDemografiController; // Pastikan namanya ini
+use App\Http\Controllers\KontakAdminController;
 
 // --- Controller Bawaan Breeze ---
 use App\Http\Controllers\ProfileController;
@@ -35,13 +36,9 @@ Route::get('/peta', function () {
     return view('profil-desa.peta');
 })->name('peta');
 
-Route::get('/struktur-organisasi', function () {
-    return view('profil-desa.struktur-organisasi');
-})->name('struktur-organisasi');
-
-Route::get('/demografis', function () {
-    return view('profil-desa.demografis');
-})->name('demografis');
+// Halaman dinamis
+Route::get('/struktur-organisasi', [HomepageController::class, 'struktur'])->name('struktur-organisasi');
+Route::get('/demografis', [HomepageController::class, 'demografis'])->name('demografis');
 
 Route::get('/potensi', function () {
     return view('potensi');
@@ -72,24 +69,37 @@ Route::get('/pengembang', function () {
 |--------------------------------------------------------------------------
 | Rute Grup Panel Admin
 |--------------------------------------------------------------------------
+|
+| PERUBAHAN:
+| 1. Menambahkan middleware 'admin' untuk keamanan.
+| 2. Menyesuaikan nama resource (misal: 'aparatur-desa' menjadi 'aparatur').
+| 3. Mengganti Route::resource untuk Demografi & Kontak menjadi route kustom.
+|
 */
 Route::prefix('admin')
     ->name('admin.')
-    // PERBAIKAN SEMENTARA (Cara 2):
-    // Mengembalikan ke 'auth' untuk debugging eror cache.
-    // Ini akan mengizinkan SEMUA user yang login mengakses admin,
-    // tapi akan menghilangkan eror "Target class [admin] does not exist."
-    ->middleware(['auth']) 
+    ->middleware(['auth', 'admin']) // Menambahkan 'admin' (dari CheckIsAdmin.php)
     ->group(function () {
 
         // Rute Dasbor Admin Kustom
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Rute CRUD (Create, Read, Update, Delete) menggunakan Resource Controller
-        Route::resource('kegiatan', KegiatanController::class);
-        Route::resource('produk', ProdukController::class);
-        Route::resource('anggaran', AnggaranController::class);
-        Route::resource('perencanaan', PerencanaanController::class);
+        // Nama-nama ini disesuaikan agar cocok dengan admin.blade.php
+        Route::resource('kegiatan', KegiatanController::class)->except(['show'])->names('kegiatan');
+        Route::resource('produk', ProdukController::class)->except(['show'])->names('produk');
+        Route::resource('anggaran', AnggaranController::class)->except(['show'])->names('anggaran');
+        
+        // CRUD Struktur Organisasi (Aparatur Desa)
+        Route::resource('aparatur', AparaturDesaController::class)->except(['show'])->names('aparatur');
+
+        // Edit Demografis
+        Route::get('demografi', [DataDemografiController::class, 'edit'])->name('demografi.edit');
+        Route::put('demografi', [DataDemografiController::class, 'update'])->name('demografi.update');
+
+        // Edit Kontak
+        Route::get('kontak', [KontakAdminController::class, 'edit'])->name('kontak.edit');
+        Route::put('kontak', [KontakAdminController::class, 'update'])->name('kontak.update');
 
 });
 

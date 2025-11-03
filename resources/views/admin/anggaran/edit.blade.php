@@ -1,83 +1,125 @@
 @extends('layouts.admin')
 @section('title', 'Edit Realisasi Anggaran')
 @section('content')
-    <h2>Edit Realisasi Anggaran Tahun: {{ $anggaran->tahun }}</h2>
-    <hr style="margin-bottom: 20px;">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+        Edit Realisasi Anggaran Tahun: {{ $anggaran->tahun }}
+    </h2>
 
-    <form action="{{ route('admin.anggaran.update', $anggaran) }}" method="POST">
-        @csrf
-        @method('PUT')
-        
-        {{-- Grup Tahun --}}
-        <div class="form-group">
-            <label for="tahun">Tahun Realisasi</label>
-            <input type="number" id="tahun" name="tahun" value="{{ old('tahun', $anggaran->tahun) }}" placeholder="Contoh: 2025" required>
-            @error('tahun') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
-        
-        <hr>
-        <h3 style="margin-top: 20px;">Input Data Pendapatan (Realisasi)</h3>
-        
-        <div class="form-group">
-            <label for="dana_desa">Dana Desa</label>
-            <input type="number" id="dana_desa" name="dana_desa" value="{{ old('dana_desa', $anggaran->dana_desa) }}" required>
-            @error('dana_desa') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
-        
-        <div class="form-group">
-            <label for="bagi_hasil">Bagi Hasil Pajak & Retribusi</label>
-            <input type="number" id="bagi_hasil" name="bagi_hasil" value="{{ old('bagi_hasil', $anggaran->bagi_hasil) }}" required>
-            @error('bagi_hasil') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
-        
-        <div class="form-group">
-            <label for="alokasi_dana_desa">Alokasi Dana Desa</label>
-            <input type="number" id="alokasi_dana_desa" name="alokasi_dana_desa" value="{{ old('alokasi_dana_desa', $anggaran->alokasi_dana_desa) }}" required>
-            @error('alokasi_dana_desa') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
+    {{-- Form Card (Tailwind) --}}
+    <div class="bg-white p-6 md:p-8 rounded-lg shadow-md">
+        <form action="{{ route('admin.anggaran.update', $anggaran) }}" method="POST">
+            @csrf
+            @method('PUT')
+            
+            {{-- Grup Tahun --}}
+            <div>
+                <label for="tahun" class="block text-sm font-medium text-gray-700">Tahun Realisasi</label>
+                <input type="number" id="tahun" name="tahun" value="{{ old('tahun', $anggaran->tahun) }}" placeholder="Contoh: 2025" required
+                       class="mt-1 block w-full md:w-1/3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                @error('tahun') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+            </div>
+            
+            <hr class="my-6 border-t border-gray-200">
 
-        <hr>
-        <h3 style="margin-top: 20px;">Input Data Pembelanjaan (Realisasi)</h3>
-        
-        <div class="form-group">
-            <label for="penyelenggaraan_pemerintahan">Penyelenggaraan Pemerintahan Desa</label>
-            <input type="number" id="penyelenggaraan_pemerintahan" name="penyelenggaraan_pemerintahan" value="{{ old('penyelenggaraan_pemerintahan', $anggaran->penyelenggaraan_pemerintahan) }}" required>
-            @error('penyelenggaraan_pemerintahan') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
+            {{-- Grid Pendapatan & Belanja --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
+                
+                {{-- Kolom Pendapatan --}}
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        Input Data Pendapatan (Realisasi)
+                    </h3>
+                    
+                    <div>
+                        <label for="dana_desa" class="block text-sm font-medium text-gray-700">Dana Desa</label>
+                        <input type="number" id="dana_desa" name="dana_desa" value="{{ old('dana_desa', $anggaran->dana_desa) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('dana_desa') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="bagi_hasil" class="block text-sm font-medium text-gray-700">Bagi Hasil Pajak & Retribusi</label>
+                        <input type="number" id="bagi_hasil" name="bagi_hasil" value="{{ old('bagi_hasil', $anggaran->bagi_hasil) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('bagi_hasil') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="alokasi_dana_desa" class="block text-sm font-medium text-gray-700">Alokasi Dana Desa</label>
+                        <input type="number" id="alokasi_dana_desa" name="alokasi_dana_desa" value="{{ old('alokasi_dana_desa', $anggaran->alokasi_dana_desa) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('alokasi_dana_desa') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <label for="pelaksanaan_pembangunan">Pelaksanaan Pembangunan Desa</label>
-            <input type="number" id="pelaksanaan_pembangunan" name="pelaksanaan_pembangunan" value="{{ old('pelaksanaan_pembangunan', $anggaran->pelaksanaan_pembangunan) }}" required>
-            @error('pelaksanaan_pembangunan') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
+                {{-- Kolom Pembelanjaan --}}
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        Input Data Pembelanjaan (Realisasi)
+                    </h3>
+                    
+                    <div>
+                        <label for="penyelenggaraan_pemerintahan" class="block text-sm font-medium text-gray-700">Penyelenggaraan Pemerintahan Desa</label>
+                        <input type="number" id="penyelenggaraan_pemerintahan" name="penyelenggaraan_pemerintahan" value="{{ old('penyelenggaraan_pemerintahan', $anggaran->penyelenggaraan_pemerintahan) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('penyelenggaraan_pemerintahan') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="pembinaan_kemasyarakatan">Pembinaan Kemasyarakatan</label>
-            <input type="number" id="pembinaan_kemasyarakatan" name="pembinaan_kemasyarakatan" value="{{ old('pembinaan_kemasyarakatan', $anggaran->pembinaan_kemasyarakatan) }}" required>
-            @error('pembinaan_kemasyarakatan') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
+                    <div>
+                        <label for="pelaksanaan_pembangunan" class="block text-sm font-medium text-gray-700">Pelaksanaan Pembangunan Desa</label>
+                        <input type="number" id="pelaksanaan_pembangunan" name="pelaksanaan_pembangunan" value="{{ old('pelaksanaan_pembangunan', $anggaran->pelaksanaan_pembangunan) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('pelaksanaan_pembangunan') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="pemberdayaan_masyarakat">Pemberdayaan Masyarakat</label>
-            <input type="number" id="pemberdayaan_masyarakat" name="pemberdayaan_masyarakat" value="{{ old('pemberdayaan_masyarakat', $anggaran->pemberdayaan_masyarakat) }}" required>
-            @error('pemberdayaan_masyarakat') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
+                    <div>
+                        <label for="pembinaan_kemasyarakatan" class="block text-sm font-medium text-gray-700">Pembinaan Kemasyarakatan</label>
+                        <input type="number" id="pembinaan_kemasyarakatan" name="pembinaan_kemasyarakatan" value="{{ old('pembinaan_kemasyarakatan', $anggaran->pembinaan_kemasyarakatan) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('pembinaan_kemasyarakatan') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="penanggulangan_bencana">Penanggulangan Bencana & Mendesak</label>
-            <input type="number" id="penanggulangan_bencana" name="penanggulangan_bencana" value="{{ old('penanggulangan_bencana', $anggaran->penanggulangan_bencana) }}" required>
-            @error('penanggulangan_bencana') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
-        
-        <hr>
-        <h3 style="margin-top: 20px;">Input Data Pembiayaan (Realisasi)</h3>
-        
-        <div class="form-group">
-            <label for="pembiayaan">Pembiayaan</label>
-            <input type="number" id="pembiayaan" name="pembiayaan" value="{{ old('pembiayaan', $anggaran->pembiayaan) }}" required>
-            @error('pembiayaan') <div class="error-message">{{ $message }}</div> @enderror
-        </div>
+                    <div>
+                        <label for="pemberdayaan_masyarakat" class="block text-sm font-medium text-gray-700">Pemberdayaan Masyarakat</label>
+                        <input type="number" id="pemberdayaan_masyarakat" name="pemberdayaan_masyarakat" value="{{ old('pemberdayaan_masyarakat', $anggaran->pemberdayaan_masyarakat) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('pemberdayaan_masyarakat') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
 
-        <button type="submit" class="btn-submit" style="background-color: #ffc107; color: #333;">Update Realisasi</button>
-    </form>
+                    <div>
+                        <label for="penanggulangan_bencana" class="block text-sm font-medium text-gray-700">Penanggulangan Bencana & Mendesak</label>
+                        <input type="number" id="penanggulangan_bencana" name="penanggulangan_bencana" value="{{ old('penanggulangan_bencana', $anggaran->penanggulangan_bencana) }}" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        @error('penanggulangan_bencana') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-6 border-t border-gray-200">
+            
+            {{-- Grup Pembiayaan --}}
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">
+                    Input Data Pembiayaan (Realisasi)
+                </h3>
+                
+                <div class="mt-4 md:w-1/3">
+                    <label for="pembiayaan" class="block text-sm font-medium text-gray-700">Pembiayaan</label>
+                    <input type="number" id="pembiayaan" name="pembiayaan" value="{{ old('pembiayaan', $anggaran->pembiayaan) }}" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    @error('pembiayaan') <div class="text-xs text-red-600">{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            {{-- Tombol Aksi --}}
+            <div class="flex justify-end mt-6 pt-6 border-t border-gray-200">
+                <a href="{{ route('admin.anggaran.index') }}" class="mr-3 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition">
+                    Batal
+                </a>
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-700 active:bg-blue-900 transition">
+                    Update Realisasi
+                </button>
+            </div>
+        </form>
+    </div>
 @endsection

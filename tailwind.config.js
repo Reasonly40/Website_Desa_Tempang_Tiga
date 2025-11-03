@@ -27,7 +27,7 @@ export default {
                 },
                 // Kita buat alias agar mudah digunakan
                 'primary': '#4a5c48', // Hijau Lumut Tua
-                'accent': '#ffc107',  // Kuning/Emas
+                'accent': '#ffffff',  // Kuning/Emas
                 'success': '#4CAF50', // Hijau Notifikasi
                 'danger': '#dc3545',  // Merah Hapus
             },

@@ -3,51 +3,68 @@
 @section('title', 'Daftar Produk Unggulan')
 
 @section('content')
-    <h2>Daftar Produk Unggulan</h2>
-    <a href="{{ route('admin.produk.create') }}" class="btn-submit" style="margin-bottom: 20px; display: inline-block;">+ Tambah Produk Baru</a>
-    <hr style="margin-bottom: 20px;">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">
+            Produk Unggulan
+        </h2>
+        <a href="{{ route('admin.produk.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 transition ease-in-out duration-150">
+            <i class="fa-solid fa-plus mr-2"></i>
+            Tambah Produk Baru
+        </a>
+    </div>
 
     @if (session('success'))
-        <div class="alert-success">
+        <div class="mb-4 p-4 bg-green-100 text-green-800 rounded-lg shadow-sm">
             {{ session('success') }}
         </div>
     @endif
 
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Gambar</th>
-                <th>Nama Produk</th>
-                <th>Kontak Penjual</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($produk as $item)
+    {{-- Container Tabel dengan Tailwind --}}
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
                 <tr>
-                    <td>
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" width="100">
-                    </td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->seller_contact ?? '-' }}</td>
-                    <td>
-                        <a href="{{ route('admin.produk.edit', $item->id) }}" class="btn-edit">Edit</a>
-                        <form action="{{ route('admin.produk.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Hapus</button>
-                        </form>
-                    </td>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gambar</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Produk</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga</th>
+                    <th scope="col" class="relative px-6 py-3"><span class="sr-only">Aksi</span></th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="4" style="text-align: center;">Belum ada data produk.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-
-    <div style="margin-top: 20px;">
-        {{ $produk->links() }}
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse ($produk as $item)
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <img src="{{ Storage::url($item->image) }}" alt="{{ $item->nama_produk }}" class="w-20 h-20 rounded-md object-cover">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $item->nama_produk }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="{{ route('admin.produk.edit', $item->id) }}" class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 transition">
+                                Edit
+                            </a>
+                            <form action="{{ route('admin.produk.destroy', $item->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-red-600 hover:bg-red-700 transition">
+                                    Hapus
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-12 whitespace-nowrap text-sm text-gray-500 text-center">
+                            Belum ada data produk.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+        
+        @if ($produk->hasPages())
+            <div class="p-6 border-t border-gray-200">
+                {{ $produk->links() }}
+            </div>
+        @endif
     </div>
 @endsection
