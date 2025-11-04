@@ -48,9 +48,7 @@ Route::get('/apbdes', [App\Http\Controllers\HomepageController::class, 'apbdes']
 
 Route::get('/produk', [HomepageController::class, 'produk'])->name('produk');
 
-Route::get('/kegiatan', function () {
-    return view('kegiatan');
-})->name('kegiatan');
+Route::get('/kegiatan', [HomepageController::class, 'kegiatan'])->name('kegiatan');
 
 Route::get('/kontak', function () {
     return view('kontak');

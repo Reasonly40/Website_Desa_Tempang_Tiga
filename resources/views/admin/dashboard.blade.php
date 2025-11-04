@@ -31,11 +31,5 @@
             <a href="{{ route('admin.produk.index') }}">Lihat Detail &rarr;</a>
         </div>
 
-        <div class="stat-card">
-            <h3>{{ $jumlahAnggaran ?? 0 }}</h3>
-            <p>Dokumen Anggaran</p>
-            <a href="{{ route('admin.anggaran.index') }}">Lihat Detail &rarr;</a>
-        </div>
-
     </div>
 @endsection

@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    {{-- Font Awesome untuk ikon play --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="font-sans antialiased bg-gray-50 text-gray-800 scroll-smooth flex flex-col min-h-screen">
@@ -17,217 +16,70 @@
     @include('layouts.partials.navbar')
 
     <main class="py-16 md:py-24 flex-grow">
-        
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 md:mb-20">
-                <a href="{{ route('kegiatan') }}"
-                   class="text-xs font-semibold text-blue-600 uppercase tracking-wider hover:underline">
-                    Kegiatan
+                <a href="{{ route('kegiatan') }}" class="text-xs font-semibold text-blue-600 uppercase tracking-wider hover:underline">
+                    Dokumentasi Kegiatan
                 </a>
                 <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-900 mt-4" style="font-family: 'Merriweather', serif;">
-                    Kegiatan Desa Tempang Tiga
-                </h2>
-                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
-                    Simak video potensi dan galeri foto berbagai kegiatan yang telah dilaksanakan di desa kami.
-                </p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden p-4 md:p-6 border border-gray-100">
-                <div class="text-center md:text-left mb-5">
-                    <h3 class="text-xl sm:text-2xl font-bold text-blue-900 flex items-center justify-center md:justify-start gap-3"
-                        style="font-family: 'Merriweather', serif;">
-                        <i class="fa-solid fa-circle-play text-blue-600"></i>
-                        <span>Video Potensi Desa</span>
-                    </h3>
-                    <p class="text-gray-600 text-sm md:text-base mt-2">
-                        Gambaran singkat mengenai keunggulan dan kehidupan di Desa Tempang Tiga.
-                    </p>
-                </div>
-
-                {{-- Video Player (Diambil dari welcome.blade.php) --}}
-                <div class="w-full rounded-2xl overflow-hidden shadow-lg aspect-video">
-                    <iframe class="w-full h-full"
-                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" {{-- GANTI URL VIDEO ANDA --}}
-                            title="Video Desa Tempang Tiga"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-
-        {{-- 2. BAGIAN GALERI FOTO (DI BAWAH) --}}
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 md:mt-24">
-            
-            <div class="text-center mb-16">
-                <h3 class="text-3xl font-bold text-gray-900" style="font-family: 'Merriweather', serif;">
                     Galeri Kegiatan Desa
-                </h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-                    Momen-momen yang terdokumentasi dari berbagai program dan aktivitas masyarakat.
-                </p>
+                </h2>
+                <p class="mt-2 text-gray-600">Dokumentasi kegiatan desa terbaru yang telah dilaksanakan.</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                
-                {{-- 
-                    PERUBAHAN DIMULAI DI SINI
-                    - Menambahkan x-data="{ open: false }" pada div utama kartu
-                    - Mengubah <h4> menjadi bisa diklik
-                    - Menambahkan x-show dan x-transition pada <p>
-                --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-                {{-- FOTO CONTOH 1 --}}
-                <div x-data="{ open: false }" class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/kegiatan-1.jpg') }}"
-                         alt="Pemasangan Batas Jaga"
-                         class="w-full h-auto object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-105">
-                    
-                    {{-- Gradient Overlay --}}
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
-                    
-                    {{-- Konten Teks (di Bawah) --}}
-                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-5">
-                        <h4 @click="open = !open" class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" style="font-family: 'Merriweather', serif;">
-                            <span>Pemasangan Batas Jaga</span>
-                            <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-                        </h4>
+                @forelse ($kegiatan as $item)
+                    {{-- Setiap item dibungkus dengan Alpine.js untuk toggle deskripsi --}}
+                    <div class="rounded-lg shadow-xl overflow-hidden relative bg-white" x-data="{ open: false }">
                         
-                        {{-- Deskripsi yang bisa dibuka-tutup --}}
-                        <p x-show="open" 
-                           x-transition:enter="transition ease-out duration-300"
-                           x-transition:enter-start="opacity-0 -translate-y-2"
-                           x-transition:enter-end="opacity-100 translate-y-0"
-                           x-transition:leave="transition ease-in duration-200"
-                           x-transition:leave-start="opacity-100 translate-y-0"
-                           x-transition:leave-end="opacity-0 -translate-y-2"
-                           class="text-white text-xs sm:text-sm opacity-90 mt-2">
-                            Pemasangan patok dan papan penanda batas untuk menegaskan garis batas desa.
-                        </p>
-                    </div>
-                </div>
-                
-                {{-- FOTO CONTOH 2 --}}
-                <div x-data="{ open: false }" class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/kegiatan-2.jpg') }}" 
-                         alt="Sosialisasi di SMP 9 SATAP Tempang"
-                         class="w-full h-auto object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-5">
-                        <h4 @click="open = !open" class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" style="font-family: 'Merriweather', serif;">
-                            <span>Sosialisasi di SMP 9 SATAP</span>
-                            <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-                        </h4>
-                        <p x-show="open" 
-                           x-transition:enter="transition ease-out duration-300"
-                           x-transition:enter-start="opacity-0 -translate-y-2"
-                           x-transition:enter-end="opacity-100 translate-y-0"
-                           x-transition:leave="transition ease-in duration-200"
-                           x-transition:leave-start="opacity-100 translate-y-0"
-                           x-transition:leave-end="opacity-0 -translate-y-2"
-                           class="text-white text-xs sm:text-sm opacity-90 mt-2">
-                            Sosialisasi program kepada siswa SMP 9 SATAP Tempang untuk meningkatkan kesadaran terhadap kebersihan lingkungan dan pemilahan sampah.
-                        </p>
-                    </div>
-                </div>
+                        {{-- Gambar --}}
+                        <div class="aspect-video bg-gray-200">
+                            <img src="{{ Storage::url($item->gambar) }}" 
+                                 alt="{{ $item->judul }}" 
+                                 class="w-full h-full object-cover">
+                        </div>
 
-                {{-- FOTO CONTOH 3 --}}
-                <div x-data="{ open: false }" class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/kegiatan-3.jpg') }}"
-                         alt="Kunjungan Dosen UNSRAT"
-                         class="w-full h-auto object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-5">
-                        <h4 @click="open = !open" class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" style="font-family: 'Merriweather', serif;">
-                            <span>Kunjungan Dosen UNSRAT</span>
-                            <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-                        </h4>
-                        <p x-show="open" 
-                           x-transition:enter="transition ease-out duration-300"
-                           x-transition:enter-start="opacity-0 -translate-y-2"
-                           x-transition:enter-end="opacity-100 translate-y-0"
-                           x-transition:leave="transition ease-in duration-200"
-                           x-transition:leave-start="opacity-100 translate-y-0"
-                           x-transition:leave-end="opacity-0 -translate-y-2"
-                           class="text-white text-xs sm:text-sm opacity-90 mt-2">
-                            Kunjungan dosen Universitas Sam Ratulangi (UNSRAT) dalam rangka koordinasi dengan mahasiswa KKT 144 UNSRAT di desa Tempang Tiga.
-                        </p>
-                    </div>
-                </div>
+                        {{-- Overlay Deskripsi/Info --}}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:p-5">
+                            
+                            {{-- Info Meta (Tanggal & Lokasi) --}}
+                            <div class="text-xs text-white opacity-80 mb-2 space-x-3">
+                                <span><i class="fa-solid fa-calendar-alt mr-1"></i> {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</span>
+                                @if ($item->lokasi)
+                                    <span><i class="fa-solid fa-map-marker-alt mr-1"></i> {{ $item->lokasi }}</span>
+                                @endif
+                            </div>
 
-                {{-- FOTO CONTOH 4 --}}
-                <div x-data="{ open: false }" class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/kegiatan-4.jpg') }}"
-                         alt="Kerja Bakti Pengecoran Jalan"
-                         class="w-full h-auto object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-5">
-                        <h4 @click="open = !open" class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" style="font-family: 'Merriweather', serif;">
-                            <span>Kerja Bakti</span>
-                            <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-                        </h4>
-                        <p x-show="open" 
-                           x-transition:enter="transition ease-out duration-300"
-                           x-transition:enter-start="opacity-0 -translate-y-2"
-                           x-transition:enter-end="opacity-100 translate-y-0"
-                           x-transition:leave="transition ease-in duration-200"
-                           x-transition:leave-start="opacity-100 translate-y-0"
-                           x-transition:leave-end="opacity-0 -translate-y-2"
-                           class="text-white text-xs sm:text-sm opacity-90 mt-2">
-                            Kerja bakti pengecoran jalan untuk memperbaiki akses serta memperkuat infrastruktur desa.
-                        </p>
-                    </div>
-                </div>
+                            {{-- Judul dan Toggle --}}
+                            <h4 @click="open = !open" 
+                                class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" 
+                                style="font-family: 'Merriweather', serif;">
+                                <span>{{ $item->judul }}</span>
+                                {{-- Ikon Chevron --}}
+                                <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
+                            </h4>
 
-                {{-- FOTO CONTOH 5 --}}
-                <div x-data="{ open: false }" class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/kegiatan-5.jpg') }}"
-                         alt="Kunjungan dari Camat Langowan Utara"
-                         class="w-full h-auto object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-5">
-                        <h4 @click="open = !open" class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" style="font-family: 'Merriweather', serif;">
-                            <span>Kunjungan Camat</span>
-                            <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-                        </h4>
-                        <p x-show="open" 
-                           x-transition:enter="transition ease-out duration-300"
-                           x-transition:enter-start="opacity-0 -translate-y-2"
-                           x-transition:enter-end="opacity-100 translate-y-0"
-                           x-transition:leave="transition ease-in duration-200"
-                           x-transition:leave-start="opacity-100 translate-y-0"
-                           x-transition:leave-end="opacity-0 -translate-y-2"
-                           class="text-white text-xs sm:text-sm opacity-90 mt-2">
-                            Kunjungan kerja Camat Langowan Utara untuk meninjau kegiatan KKT 144 UNSRAT di desa Tempang Tiga.
-                        </p>
+                            {{-- Deskripsi (Muncul/Sembunyi) --}}
+                            <p x-show="open" 
+                               x-transition:enter="transition ease-out duration-300"
+                               x-transition:enter-start="opacity-0 -translate-y-2"
+                               x-transition:enter-end="opacity-100 translate-y-0"
+                               x-transition:leave="transition ease-in duration-200"
+                               x-transition:leave-start="opacity-100 translate-y-0"
+                               x-transition:leave-end="opacity-0 -translate-y-2"
+                               class="text-white text-xs sm:text-sm opacity-90 mt-2">
+                                {!! $item->deskripsi !!}
+                            </p>
+                        </div>
                     </div>
-                </div>
-
-                {{-- FOTO CONTOH 6 --}}
-                <div x-data="{ open: false }" class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/kegiatan-6.jpg') }}"
-                         alt="Edukasi Anak-anak"
-                         class="w-full h-auto object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-5">
-                        <h4 @click="open = !open" class="text-white text-sm sm:text-base font-semibold cursor-pointer flex justify-between items-center" style="font-family: 'Merriweather', serif;">
-                            <span>Edukasi Anak-anak</span>
-                            <i class="fa-solid fa-chevron-down text-xs ml-1 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-                        </h4>
-                        <p x-show="open" 
-                           x-transition:enter="transition ease-out duration-300"
-                           x-transition:enter-start="opacity-0 -translate-y-2"
-                           x-transition:enter-end="opacity-100 translate-y-0"
-                           x-transition:leave="transition ease-in duration-200"
-                           x-transition:leave-start="opacity-100 translate-y-0"
-                           x-transition:leave-end="opacity-0 -translate-y-2"
-                           class="text-white text-xs sm:text-sm opacity-90 mt-2">
-                            Edukasi interaktif di Balai Desa bagi anak-anak berupa kegiatan belajar membaca dan berhitung dasar, dan permainan edukatif.
-                        </p>
+                @empty
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12 bg-white rounded-lg shadow-md">
+                        <i class="fa-solid fa-camera-slash text-5xl text-gray-400 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Belum Ada Dokumentasi</h3>
+                        <p class="text-gray-500 mt-2">Admin belum menambahkan dokumentasi kegiatan terbaru.</p>
                     </div>
-                </div>
-
+                @endforelse
             </div>
 
         </div>

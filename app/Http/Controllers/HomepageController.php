@@ -128,5 +128,11 @@ class HomepageController extends Controller
         $produk = Produk::latest()->get();
         return view('produk', compact('produk'));
     }
+
+    public function kegiatan()
+    {
+        $kegiatan = Kegiatan::latest('tanggal')->get();
+        return view('kegiatan', compact('kegiatan'));
+    }
 }
 

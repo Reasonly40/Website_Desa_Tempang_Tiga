@@ -2,19 +2,7 @@
 
 @section('title', 'Edit Kegiatan')
 
-{{-- Script TinyMCE akan dimuat di @stack('scripts') --}}
-@push('scripts')
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#deskripsi',
-            plugins: 'lists link autolink charmap code',
-            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link code',
-            menubar: false,
-            height: 300
-        });
-    </script>
-@endpush
+{{-- HAPUS BLOK @push('scripts') UNTUK TINYMCE --}}
 
 @section('content')
     <h2 class="text-3xl font-bold text-gray-800 mb-6">
@@ -44,8 +32,23 @@
 
                 <div>
                     <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                    {{-- UBAH: Textarea biasa --}}
                     <textarea id="deskripsi" name="deskripsi" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
                     @error('deskripsi') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                </div>
+
+                <div>
+                    <label for="lokasi" class="block text-sm font-medium text-gray-700">Lokasi Kegiatan (Opsional)</label>
+                    <input type="text" id="lokasi" name="lokasi" value="{{ old('lokasi', $kegiatan->lokasi) }}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Contoh: Balai Desa">
+                    @error('lokasi') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                </div>
+                
+                <div>
+                    <label for="penanggung_jawab" class="block text-sm font-medium text-gray-700">Penanggung Jawab (Opsional)</label>
+                    <input type="text" id="penanggung_jawab" name="penanggung_jawab" value="{{ old('penanggung_jawab', $kegiatan->penanggung_jawab) }}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Contoh: Kasi Pemerintahan">
+                    @error('penanggung_jawab') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
@@ -57,7 +60,8 @@
                     
                     @if ($kegiatan->gambar)
                         <div class="mt-4 flex items-center gap-3">
-                            <img src="{{ asset('storage/' . $kegiatan->gambar) }}" alt="{{ $kegiatan->judul }}" class="w-24 h-24 rounded-lg object-cover">
+                            {{-- PERBAIKAN: Menggunakan Storage::url() --}}
+                            <img src="{{ Storage::url($kegiatan->gambar) }}" alt="{{ $kegiatan->judul }}" class="w-24 h-24 rounded-lg object-cover">
                             <p class="text-sm text-gray-500">Foto saat ini.</p>
                         </div>
                     @endif

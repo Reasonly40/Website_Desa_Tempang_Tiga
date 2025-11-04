@@ -30,24 +30,24 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        // --- PERBAIKAN: Sesuaikan validasi dengan nama kolom di Migrasi --
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tanggal' => 'required|date',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048' // Wajib diisi
+            'lokasi' => 'nullable|string|max:255', // <-- DITAMBAHKAN
+            'penanggung_jawab' => 'nullable|string|max:255', // <-- DITAMBAHKAN
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
-        // --- PERBAIKAN: Simpan gambar ---
         $imagePath = $request->file('gambar')->store('kegiatan', 'public');
 
-        // --- PERBAIKAN: Simpan ke database dengan nama kolom yang benar ---
         Kegiatan::create([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'tanggal' => $request->tanggal,
+            'lokasi' => $request->lokasi, // <-- DITAMBAHKAN
+            'penanggung_jawab' => $request->penanggung_jawab, // <-- DITAMBAHKAN
             'gambar' => $imagePath,
-            // 'lokasi' dan 'penanggung_jawab' opsional, jadi tidak perlu diisi di sini
         ]);
 
         return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan!');
@@ -66,21 +66,19 @@ class KegiatanController extends Controller
      */
     public function update(Request $request, Kegiatan $kegiatan)
     {
-         // --- PERBAIKAN: Validasi dengan nama kolom yang benar ---
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Opsional saat update
+            'lokasi' => 'nullable|string|max:255', // <-- DITAMBAHKAN
+            'penanggung_jawab' => 'nullable|string|max:255', // <-- DITAMBAHKAN
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
-        // --- PERBAIKAN: Cek file 'gambar' ---
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
             if ($kegiatan->gambar) {
                 Storage::disk('public')->delete($kegiatan->gambar);
             }
-            // Simpan gambar baru
             $imagePath = $request->file('gambar')->store('kegiatan', 'public');
             $validated['gambar'] = $imagePath;
         }
