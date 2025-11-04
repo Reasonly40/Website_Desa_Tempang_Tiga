@@ -8,7 +8,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="font-sans antialiased bg-gray-50 text-gray-800 scroll-smooth flex flex-col min-h-screen">
@@ -17,109 +16,66 @@
 
     <main class="py-16 md:py-24 flex-grow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
             <div class="text-center mb-16 md:mb-20">
-                <a href="#"
-                   class="text-xs font-semibold text-blue-600 uppercase tracking-wider hover:underline">
-                    Ekonomi & UMKM
+                <a href="{{ route('produk') }}" class="text-xs font-semibold text-blue-600 uppercase tracking-wider hover:underline">
+                    Produk Unggulan
                 </a>
                 <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-900 mt-4" style="font-family: 'Merriweather', serif;">
-                    Produk Unggulan Desa
+                    Produk Unggulan Desa Tempang Tiga
                 </h2>
-                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
-                    Jelajahi dan temukan hasil karya dan produk terbaik dari masyarakat Desa Tempang Tiga.
-                </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/potensi-sapi.jpeg') }}" 
-                         alt="Daging Sapi Segar" 
-                         class="w-full h-56 object-cover">
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3" style="font-family: 'Merriweather', serif;">
-                            Daging Sapi
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                            Daging sapi segar berkualitas premium dari ternak lokal Desa Tempang Tiga. Diproses secara higienis.
-                        </p>
-                    </div>
-                    <div class="px-6 pb-6 pt-2">
-                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan produk Daging Sapi Segar..."
-                           target="_blank" 
-                           class="inline-flex items-center justify-center w-full px-5 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <i class="fa-brands fa-whatsapp text-lg mr-2"></i>
-                            Hubungi Penjual
-                        </a>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/potensi-padi.jpg') }}" 
-                         alt="Beras Lokal Berkualitas" 
-                         class="w-full h-56 object-cover">
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3" style="font-family: 'Merriweather', serif;">
-                            Beras
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                            Beras pulen hasil panen dari sawah irigasi desa. Tanpa pemutih dan pengawet, alami dan sehat.
-                        </p>
-                    </div>
-                    <div class="px-6 pb-6 pt-2">
-                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan produk Beras Lokal..."
-                           target="_blank" 
-                           class="inline-flex items-center justify-center w-full px-5 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <i class="fa-brands fa-whatsapp text-lg mr-2"></i>
-                            Hubungi Penjual
-                        </a>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/potensi-ubi.jpg') }}" 
-                         alt="Keripik Ubi (Singkong)" 
-                         class="w-full h-56 object-cover">
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3" style="font-family: 'Merriweather', serif;">
-                            Keripik Ubi
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                            Camilan renyah keripik singkong asli buatan UMKM desa. Tersedia rasa original, balado, dan keju.
-                        </p>
-                    </div>
-                    <div class="px-6 pb-6 pt-2">
-                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan produk Keripik Ubi..."
-                           target="_blank" 
-                           class="inline-flex items-center justify-center w-full px-5 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <i class="fa-brands fa-whatsapp text-lg mr-2"></i>
-                            Hubungi Penjual
-                        </a>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 hover:shadow-xl">
-                    <img src="{{ asset('images/potensi-tomat.jpeg') }}" 
-                         alt="Tomat Segar Petik" 
-                         class="w-full h-56 object-cover">
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3" style="font-family: 'Merriweather', serif;">
-                            Tomat Segar
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                            Tomat segar hasil hortikultura desa. Dipetik langsung saat matang sempurna, cocok untuk sambal atau jus.
-                        </p>
+                @forelse ($produk as $item)
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-shadow duration-300 hover:shadow-lg">
+                        {{-- Gambar Produk --}}
+                        <div class="aspect-video bg-gray-100">
+                            <img src="{{ Storage::url($item->image) }}" 
+                                 alt="{{ $item->nama_produk }}" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        
+                        {{-- Nama, Harga & Deskripsi --}}
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-gray-900" style="font-family: 'Merriweather', serif;">
+                                {{ $item->nama_produk }}
+                            </h3>
+                            
+                            {{-- TAMPILKAN HARGA --}}
+                            <p class="text-lg font-bold text-blue-600 mt-2 mb-3">
+                                Rp {{ number_format($item->harga, 0, ',', '.') }}
+                            </p>
+                            
+                            {{-- Deskripsi --}}
+                            <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                {{ $item->deskripsi }}
+                            </p>
+                        </div>
+                        
+                        {{-- Tombol Kontak (WA) --}}
+                        <div class="px-6 pb-6 pt-2">
+                            @if ($item->seller_contact)
+                                <a href="https://wa.me/{{ $item->seller_contact }}?text=Halo, saya tertarik dengan produk '{{ $item->nama_produk }}'..."
+                                   target="_blank" 
+                                   class="inline-flex items-center justify-center w-full px-5 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                    <i class="fa-brands fa-whatsapp text-lg mr-2"></i>
+                                    Hubungi Penjual
+                                </a>
+                            @else
+                                <span class="inline-flex items-center justify-center w-full px-5 py-3 border border-gray-300 text-sm font-medium rounded-lg text-gray-500 bg-gray-100">
+                                    Kontak tidak tersedia
+                                </span>
+                            @endif
+                        </div>
                     </div>
-                    <div class="px-6 pb-6 pt-2">
-                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan produk Tomat Segar..."
-                           target="_blank" 
-                           class="inline-flex items-center justify-center w-full px-5 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <i class="fa-brands fa-whatsapp text-lg mr-2"></i>
-                            Hubungi Penjual
-                        </a>
+                @empty
+                    <div class="sm:col-span-2 lg:col-span-3 text-center py-12 bg-white rounded-lg shadow-md">
+                        <i class="fa-solid fa-store-slash text-5xl text-gray-400 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Belum Ada Produk</h3>
+                        <p class="text-gray-500 mt-2">Admin belum menambahkan produk unggulan desa.</p>
                     </div>
-                </div>
+                @endforelse
             </div>
 
         </div>

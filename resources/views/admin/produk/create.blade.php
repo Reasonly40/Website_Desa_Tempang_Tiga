@@ -1,24 +1,9 @@
 @extends('layouts.admin')
-
 @section('title', 'Tambah Produk Baru')
-
-{{-- TinyMCE akan di-load di sini --}}
-@push('scripts')
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#deskripsi',
-            plugins: 'lists link autolink charmap code',
-            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link code',
-            menubar: false,
-            height: 300
-        });
-    </script>
-@endpush
 
 @section('content')
     <h2 class="text-3xl font-bold text-gray-800 mb-6">
-        Tambah Produk Unggulan Baru
+        Tambah Produk UMKM Desa
     </h2>
 
     @if (session('success'))
@@ -27,7 +12,6 @@
         </div>
     @endif
 
-    {{-- Form Card (Tailwind) --}}
     <div class="bg-white p-6 md:p-8 rounded-lg shadow-md">
         <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -46,9 +30,21 @@
                     @error('harga') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
+                {{-- TAMBAHKAN INPUT KONTAK SELLER --}}
                 <div>
-                    <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                    <textarea id="deskripsi" name="deskripsi" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">{{ old('deskripsi') }}</textarea>
+                    <label for="seller_contact" class="block text-sm font-medium text-gray-700">Nomor WA Penjual (Opsional)</label>
+                    <input type="text" id="seller_contact" name="seller_contact" value="{{ old('seller_contact') }}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Contoh: 628123456789 (awali dengan 62)">
+                    <p class="mt-1 text-xs text-gray-500">Awali dengan 62 (contoh: 62812...).</p>
+                    @error('seller_contact') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
+                </div>
+
+                <div>
+                    <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi Singkat</label>
+                    <textarea id="deskripsi" name="deskripsi" rows="3" maxlength="100" required
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                              placeholder="Deskripsi singkat produk, maks 100 karakter.">{{ old('deskripsi') }}</textarea>
+                    <p class="mt-1 text-xs text-gray-500">Maksimal 100 karakter.</p>
                     @error('deskripsi') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 

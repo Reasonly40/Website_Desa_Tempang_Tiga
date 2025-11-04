@@ -8,73 +8,56 @@ use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
-    /**
-     * Menampilkan daftar semua produk.
-     */
     public function index()
     {
         $produk = Produk::latest()->paginate(10);
         return view('admin.produk.index', compact('produk'));
     }
 
-    /**
-     * Menampilkan form untuk menambah produk baru.
-     */
     public function create()
     {
         return view('admin.produk.create');
     }
 
-    /**
-     * Menyimpan produk baru ke database.
-     */
     public function store(Request $request)
     {
+        // PERBAIKAN: Validasi disesuaikan dengan form baru
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'seller_contact' => 'nullable|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'nama_produk' => 'required|string|max:255',
+            'harga' => 'required|integer|min:0',
+            'seller_contact' => 'nullable|string|max:20', // Input untuk No. WA
+            'deskripsi' => 'required|string|max:100', // Batas 100 karakter
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
         $imagePath = $request->file('image')->store('produk', 'public');
 
+        // PERBAIKAN: Kolom disesuaikan dengan form baru
         Produk::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'seller_contact' => $request->seller_contact,
+            'nama_produk' => $request->nama_produk,
+            'harga' => $request->harga,
+            'seller_contact' => $request->seller_contact, // Input untuk No. WA
+            'deskripsi' => $request->deskripsi,
             'image' => $imagePath,
         ]);
 
         return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    /**
-     * Menampilkan detail satu produk (opsional).
-     */
-    public function show(Produk $produk)
-    {
-        return '<h1>Detail Produk: ' . $produk->name . '</h1>';
-    }
-
-    /**
-     * Menampilkan form untuk mengedit produk.
-     */
     public function edit(Produk $produk)
     {
         return view('admin.produk.edit', compact('produk'));
     }
 
-    /**
-     * Memperbarui data produk di database.
-     */
     public function update(Request $request, Produk $produk)
     {
+        // PERBAIKAN: Validasi disesuaikan dengan form baru
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'seller_contact' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'nama_produk' => 'required|string|max:255',
+            'harga' => 'required|integer|min:0',
+            'seller_contact' => 'nullable|string|max:20', // Input untuk No. WA
+            'deskripsi' => 'required|string|max:100', // Batas 100 karakter
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
         if ($request->hasFile('image')) {
@@ -90,9 +73,6 @@ class ProdukController extends Controller
         return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil diperbarui!');
     }
 
-    /**
-     * Menghapus produk dari database.
-     */
     public function destroy(Produk $produk)
     {
         if ($produk->image) {

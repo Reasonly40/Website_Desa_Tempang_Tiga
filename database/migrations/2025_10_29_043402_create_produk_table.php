@@ -10,10 +10,11 @@ class CreateProdukTable extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->string('image')->nullable();
-            $table->string('seller_contact')->nullable();
+            $table->string('nama_produk'); // Diubah dari 'name'
+            $table->text('deskripsi')->nullable(); // Diubah dari 'description'
+            $table->integer('harga')->default(0); 
+            $table->string('seller_contact')->nullable(); 
+            $table->string('image');
             $table->timestamps();
         });
     }

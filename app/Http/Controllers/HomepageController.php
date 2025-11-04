@@ -122,5 +122,11 @@ class HomepageController extends Controller
 
         return view('apbdes', compact('anggaran'));
     }
+
+    public function produk()
+    {
+        $produk = Produk::latest()->get();
+        return view('produk', compact('produk'));
+    }
 }
 

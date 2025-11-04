@@ -2,23 +2,11 @@
 
 @section('title', 'Edit Produk')
 
-{{-- TinyMCE akan di-load di sini --}}
-@push('scripts')
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#deskripsi',
-            plugins: 'lists link autolink charmap code',
-            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link code',
-            menubar: false,
-            height: 300
-        });
-    </script>
-@endpush
+{{-- HAPUS BLOK @push('scripts') UNTUK TINYMCE --}}
 
 @section('content')
     <h2 class="text-3xl font-bold text-gray-800 mb-6">
-        Edit Produk Unggulan
+        Edit Produk UMKM Desa
     </h2>
 
     {{-- Form Card (Tailwind) --}}
@@ -43,8 +31,12 @@
                 </div>
 
                 <div>
-                    <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                    <textarea id="deskripsi" name="deskripsi" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">{{ old('deskripsi', $produk->deskripsi) }}</textarea>
+                    <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi Singkat</label>
+                    {{-- UBAH: Textarea biasa dengan maxlength --}}
+                    <textarea id="deskripsi" name="deskripsi" rows="3" maxlength="100" required
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                              placeholder="Deskripsi singkat produk, maks 100 karakter.">{{ old('deskripsi', $produk->deskripsi) }}</textarea>
+                    <p class="mt-1 text-xs text-gray-500">Maksimal 100 karakter.</p>
                     @error('deskripsi') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 

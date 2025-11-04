@@ -16,11 +16,13 @@ class Produk extends Model
 
     /**
      * Kolom yang boleh diisi secara massal.
+     * (PERBAIKAN: disesuaikan dengan form)
      */
     protected $fillable = [
-        'name',
-        'description',
-        'image',
+        'nama_produk',
+        'deskripsi',
+        'harga',
         'seller_contact',
+        'image',
     ];
 }

@@ -46,9 +46,7 @@ Route::get('/potensi', function () {
 
 Route::get('/apbdes', [App\Http\Controllers\HomepageController::class, 'apbdes'])->name('apbdes');
 
-Route::get('/produk', function () {
-    return view('produk');
-})->name('produk');
+Route::get('/produk', [HomepageController::class, 'produk'])->name('produk');
 
 Route::get('/kegiatan', function () {
     return view('kegiatan');
