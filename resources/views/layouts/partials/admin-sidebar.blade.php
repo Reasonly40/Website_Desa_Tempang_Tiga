@@ -70,7 +70,7 @@
             </div>
             <div class="ml-3">
                 <p class="text-sm font-medium text-white">{{ Auth::user()->name }}</p>
-                <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Lihat profil</p>
+                {{-- <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Lihat profil</p> --}}
             </div>
         </div>
     </a>

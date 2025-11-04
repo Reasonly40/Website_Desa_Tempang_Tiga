@@ -28,16 +28,18 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 
                 @forelse ($produk as $item)
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-shadow duration-300 hover:shadow-lg">
-                        {{-- Gambar Produk --}}
-                        <div class="aspect-video bg-gray-100">
+                    {{-- Hapus flex-col agar card tidak bergantung pada konten --}}
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+                        
+                        {{-- Gambar Produk: Tetap Aspec-Square --}}
+                        <div class="aspect-square bg-gray-100">
                             <img src="{{ Storage::url($item->image) }}" 
                                  alt="{{ $item->nama_produk }}" 
                                  class="w-full h-full object-cover">
                         </div>
                         
                         {{-- Nama, Harga & Deskripsi --}}
-                        <div class="p-6 flex-grow">
+                        <div class="p-6">
                             <h3 class="text-xl font-semibold text-gray-900" style="font-family: 'Merriweather', serif;">
                                 {{ $item->nama_produk }}
                             </h3>
@@ -47,10 +49,10 @@
                                 Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </p>
                             
-                            {{-- Deskripsi --}}
-                            <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                            {{-- Deskripsi (Gunakan tinggi tetap untuk seragam) --}}
+                            <div class="text-gray-600 text-sm leading-relaxed line-clamp-3 h-16 overflow-hidden">
                                 {{ $item->deskripsi }}
-                            </p>
+                            </div>
                         </div>
                         
                         {{-- Tombol Kontak (WA) --}}

@@ -104,7 +104,7 @@
                     <h2 class="text-xl sm:text-2xl font-bold text-gray-900" style="font-family: 'Merriweather', serif;">
                         Statistik Desa
                     </h2>
-                    <a href="#"
+                    <a href="{{ route('demografis') }}"
                        class="inline-flex items-center px-5 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                         Selengkapnya
                     </a>
@@ -138,22 +138,23 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 @forelse ($kegiatanTerbaru as $kegiatan)
-                    <a href="#" {{-- TODO: Ganti '#' dengan route('kegiatan.public.show', $kegiatan->slug) --}}
+                    {{-- INTEGRASI: Tautan kartu kegiatan diarahkan ke halaman kegiatan --}}
+                    <a href="{{ route('kegiatan') }}" 
                        class="block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition group duration-300">
                         
-                        <img src="{{ $kegiatan->image ? asset('storage/' . $kegiatan->image) : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Kegiatan' }}" 
-                             alt="{{ $kegiatan->nama_kegiatan ?? 'Kegiatan Desa' }}" 
+                        <img src="{{ $kegiatan->gambar ? Storage::url($kegiatan->gambar) : asset('images/kegiatan-placeholder.jpg') }}" 
+                             alt="{{ $kegiatan->judul ?? 'Kegiatan Desa' }}" 
                              class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105">
                         
                         <div class="p-4 sm:p-5">
                             <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-2 group-hover:text-blue-600 transition-colors" style="font-family: 'Merriweather', serif;">
-                                {{ $kegiatan->nama_kegiatan ?? 'Nama Kegiatan' }}
+                                {{ $kegiatan->judul ?? 'Nama Kegiatan' }}
                             </h3> 
                             <p class="text-gray-600 text-xs sm:text-sm leading-relaxed"> 
                                 {{ Str::limit(strip_tags($kegiatan->deskripsi ?? 'Deskripsi...'), 100, '...') }}
                             </p>
                             <p class="text-xs text-gray-400 mt-3">
-                                {{ $kegiatan->tanggal_kegiatan ? \Carbon\Carbon::parse($kegiatan->tanggal_kegiatan)->translatedFormat('d F Y') : '' }}
+                                {{ $kegiatan->tanggal ? \Carbon\Carbon::parse($kegiatan->tanggal)->translatedFormat('d F Y') : '' }}
                             </p>
                         </div>
                     </a>
@@ -166,7 +167,8 @@
             </div>
 
             <div class="flex justify-center mt-10 md:mt-12">
-                <a href="#" {{-- TODO: Ganti '#' dengan route('kegiatan.public.index') --}}
+                {{-- INTEGRASI: Tombol "Lihat Semua Kegiatan" --}}
+                <a href="{{ route('kegiatan') }}" 
                    class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                     Lihat Semua Kegiatan
                 </a>
@@ -183,10 +185,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse ($produkTerbaru as $produk)
-                    <a href="#" {{-- TODO: Ganti '#' dengan route('produk.public.show', $produk->slug) --}}
+                    {{-- INTEGRASI: Tautan kartu produk diarahkan ke halaman produk --}}
+                    <a href="{{ route('produk') }}" 
                        class="block bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition group duration-300">
                         
-                        <img src="{{ $produk->image ? asset('storage/' . $produk->image) : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Produk' }}" 
+                        <img src="{{ $produk->image ? Storage::url($produk->image) : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Produk' }}" 
                              alt="{{ $produk->nama_produk ?? 'Produk Desa' }}" 
                              class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105">
                         
@@ -210,7 +213,8 @@
             </div>
 
             <div class="flex justify-center mt-10 md:mt-12">
-                <a href="#" {{-- TODO: Ganti '#' dengan route('produk.public.index') --}}
+                {{-- INTEGRASI: Tombol "Lihat Semua Produk" --}}
+                <a href="{{ route('produk') }}"
                    class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                     Lihat Semua Produk
                 </a>
@@ -325,7 +329,7 @@
                         
                         {{-- Item Dana Desa --}}
                         @php $persen = hitungPersen($anggaranTerbaru->dana_desa, $anggaranTerbaru->anggaran_dana_desa); @endphp
-                         <div>
+                        <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Dana Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
                                 Rp {{ number_format($anggaranTerbaru->dana_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_dana_desa, 0, ',', '.') }}
@@ -351,7 +355,7 @@
                         
                         {{-- Item Alokasi Dana Desa --}}
                         @php $persen = hitungPersen($anggaranTerbaru->alokasi_dana_desa, $anggaranTerbaru->anggaran_alokasi_dana_desa); @endphp
-                         <div>
+                        <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Alokasi Dana Desa</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
                                 Rp {{ number_format($anggaranTerbaru->alokasi_dana_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_alokasi_dana_desa, 0, ',', '.') }}
@@ -398,7 +402,7 @@
                         
                         {{-- Item Pembinaan --}}
                         @php $persen = hitungPersen($anggaranTerbaru->belanja_pembinaan_kemasyarakatan, $anggaranTerbaru->anggaran_pembinaan_kemasyarakatan); @endphp
-                         <div>
+                        <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pembinaan Kemasyarakatan</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
                                 Rp {{ number_format($anggaranTerbaru->belanja_pembinaan_kemasyarakatan, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pembinaan_kemasyarakatan, 0, ',', '.') }}
@@ -411,7 +415,7 @@
                         
                         {{-- Item Pemberdayaan --}}
                         @php $persen = hitungPersen($anggaranTerbaru->belanja_pemberdayaan_masyarakat, $anggaranTerbaru->anggaran_pemberdayaan_masyarakat); @endphp
-                         <div>
+                        <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pemberdayaan Masyarakat</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
                                 Rp {{ number_format($anggaranTerbaru->belanja_pemberdayaan_masyarakat, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pemberdayaan_masyarakat, 0, ',', '.') }}
@@ -424,7 +428,7 @@
                         
                         {{-- Item Bencana --}}
                         @php $persen = hitungPersen($anggaranTerbaru->belanja_penanggulangan_bencana, $anggaranTerbaru->anggaran_penanggulangan_bencana); @endphp
-                         <div>
+                        <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Penanggulangan Bencana & Mendesak</p>
                             <p class="text-xs md:text-sm text-gray-500 truncate">
                                 Rp {{ number_format($anggaranTerbaru->belanja_penanggulangan_bencana, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_penanggulangan_bencana, 0, ',', '.') }}
@@ -445,7 +449,8 @@
             @endif
 
             <div class="mt-20 text-center">
-                <a href="{{ route('apbdes') }}" {{-- Link ke halaman APBDes --}}
+                {{-- INTEGRASI: Tombol "Selengkapnya" APBDes --}}
+                <a href="{{ route('apbdes') }}"
                    class="inline-flex items-center px-5 py-2 border border-green-700 text-green-800 rounded-full hover:bg-green-800 hover:text-white transition text-sm">
                     Selengkapnya
                 </a>
