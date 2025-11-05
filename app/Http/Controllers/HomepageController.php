@@ -9,6 +9,7 @@ use App\Models\Anggaran;
 use App\Models\AparaturDesa;
 use App\Models\DataDemografi;
 use Illuminate\Http\Request;
+use Carbon\Carbon; 
 
 class HomepageController extends Controller
 {
@@ -17,7 +18,7 @@ class HomepageController extends Controller
         if ($anggaran > 0) {
             return ($realisasi / $anggaran) * 100;
         }
-        return 0; // Hindari pembagian dengan nol
+        return 0; 
     }
 
     public function index()
@@ -25,63 +26,54 @@ class HomepageController extends Controller
         // 2. AMBIL DATA DARI DATABASE
         $produkTerbaru = Produk::latest()->take(3)->get();
         $kegiatanTerbaru = Kegiatan::latest()->take(3)->get();
-        $anggaranTerbaru = Anggaran::latest()->first();
+        $anggaranTerbaru = Anggaran::latest('tahun')->latest('semester')->first(); // Ambil yg terbaru
+        $dataDemografi = DataDemografi::first(); // <-- TAMBAHKAN INI
 
         // 3. SIAPKAN VARIABEL UNTUK VIEW
-        
-        $tahun = date('Y'); // Default tahun ini
-        $perencanaanTerbaru = null; // Ini adalah pengganti fitur 'perencanaan'
+        $tahun = date('Y');
         $total_anggaran_pendapatan = 0;
-        $total_perencanaan_pendapatan = 0; // Ini adalah 'anggaran' pendapatan
+        $total_perencanaan_pendapatan = 0;
         $total_anggaran_belanja = 0;
-        $total_perencanaan_belanja = 0; // Ini adalah 'anggaran' belanja
+        $total_perencanaan_belanja = 0;
         $realisasi_pembiayaan = 0;
         $anggaran_pembiayaan = 0;
 
-        // Jika data anggaran ada, ambil data dari sana
+        // Cek data anggaran (menggunakan struktur baru)
         if ($anggaranTerbaru) {
             $tahun = $anggaranTerbaru->tahun;
             
-            // Set 'perencanaanTerbaru' agar @if di view lolos
-            $perencanaanTerbaru = $anggaranTerbaru; 
-
-            // Hitung Total Realisasi Pendapatan
-            $total_anggaran_pendapatan = $anggaranTerbaru->dana_desa +
-                                         $anggaranTerbaru->bagi_hasil_pajak +
-                                         $anggaranTerbaru->alokasi_dana_desa;
+            // Total Pendapatan
+            $total_anggaran_pendapatan = $anggaranTerbaru->pendapatan_asli_desa_realisasi +
+                                         $anggaranTerbaru->pendapatan_transfer_realisasi +
+                                         $anggaranTerbaru->pendapatan_lain_lain_realisasi;
             
-            // Hitung Total Anggaran Pendapatan
-            $total_perencanaan_pendapatan = $anggaranTerbaru->anggaran_dana_desa +
-                                            $anggaranTerbaru->anggaran_bagi_hasil_pajak +
-                                            $anggaranTerbaru->anggaran_alokasi_dana_desa;
+            $total_perencanaan_pendapatan = $anggaranTerbaru->pendapatan_asli_desa_anggaran +
+                                            $anggaranTerbaru->pendapatan_transfer_anggaran +
+                                            $anggaranTerbaru->pendapatan_lain_lain_anggaran;
 
-            // Hitung Total Realisasi Belanja
-            $total_anggaran_belanja = $anggaranTerbaru->belanja_penyelenggaraan_pemerintahan_desa +
-                                      $anggaranTerbaru->belanja_pelaksanaan_pembangunan_desa +
-                                      $anggaranTerbaru->belanja_pembinaan_kemasyarakatan +
-                                      $anggaranTerbaru->belanja_pemberdayaan_masyarakat +
-                                      $anggaranTerbaru->belanja_penanggulangan_bencana;
+            // Total Belanja
+            $total_anggaran_belanja = $anggaranTerbaru->belanja_pegawai_realisasi +
+                                      $anggaranTerbaru->belanja_barang_jasa_realisasi +
+                                      $anggaranTerbaru->belanja_modal_realisasi +
+                                      $anggaranTerbaru->belanja_tidak_terduga_realisasi;
 
-            // Hitung Total Anggaran Belanja
-            $total_perencanaan_belanja = $anggaranTerbaru->anggaran_penyelenggaraan_pemerintahan_desa +
-                                         $anggaranTerbaru->anggaran_pelaksanaan_pembangunan_desa +
-                                         $anggaranTerbaru->anggaran_pembinaan_kemasyarakatan +
-                                         $anggaranTerbaru->anggaran_pemberdayaan_masyarakat +
-                                         $anggaranTerbaru->anggaran_penanggulangan_bencana;
+            $total_perencanaan_belanja = $anggaranTerbaru->belanja_pegawai_anggaran +
+                                         $anggaranTerbaru->belanja_barang_jasa_anggaran +
+                                         $anggaranTerbaru->belanja_modal_anggaran +
+                                         $anggaranTerbaru->belanja_tidak_terduga_anggaran;
             
-            // Data Pembiayaan (Jika ada di Model Anggaran Anda)
-            // Jika Anda belum menambahkannya, ini akan bernilai 0
-            $realisasi_pembiayaan = $anggaranTerbaru->pembiayaan ?? 0; 
-            $anggaran_pembiayaan = $anggaranTerbaru->anggaran_pembiayaan ?? 0;
+            // Pembiayaan Netto
+            $realisasi_pembiayaan = $anggaranTerbaru->penerimaan_pembiayaan_realisasi - $anggaranTerbaru->pengeluaran_pembiayaan_realisasi;
+            $anggaran_pembiayaan = $anggaranTerbaru->penerimaan_pembiayaan_anggaran - $anggaranTerbaru->pengeluaran_pembiayaan_anggaran;
         }
 
         // 4. KIRIM SEMUA DATA KE VIEW 'welcome'
         return view('welcome', [
             'produkTerbaru' => $produkTerbaru,
             'kegiatanTerbaru' => $kegiatanTerbaru,
-            'anggaranTerbaru' => $anggaranTerbaru,
+            'anggaranTerbaru' => $anggaranTerbaru, // Kirim objek utuh
+            'dataDemografi' => $dataDemografi, // <-- TAMBAHKAN INI
             
-            'perencanaanTerbaru' => $perencanaanTerbaru, // Digunakan untuk cek @if
             'tahun' => $tahun,
             
             'total_anggaran_pendapatan' => $total_anggaran_pendapatan,
@@ -111,15 +103,15 @@ class HomepageController extends Controller
     {
         $data = DataDemografi::first();
         if (!$data) {
-            $data = new DataDemografi(); // Kirim model kosong jika belum diisi
+            $data = new DataDemografi();
         }
         return view('profil-desa.demografis', compact('data'));
     }
 
     public function apbdes()
     {
+        // Ambil data terbaru (Tahun DAN Semester terbaru)
         $anggaran = Anggaran::orderBy('tahun', 'desc')->orderBy('semester', 'desc')->first();
-
         return view('apbdes', compact('anggaran'));
     }
 
@@ -135,4 +127,3 @@ class HomepageController extends Controller
         return view('kegiatan', compact('kegiatan'));
     }
 }
-

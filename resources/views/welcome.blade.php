@@ -8,13 +8,14 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="font-sans antialiased bg-white text-gray-800">
 
     @include('layouts.partials.back-to-top')
     @include('layouts.partials.navbar')
 
-    <section class="relative text-center bg-white pt-10 md:pt-20"> {{-- Kurangi padding top di mobile --}}
+    <section class="relative text-center bg-white pt-10 md:pt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-left md:ml-4 lg:ml-8">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900" style="font-family: 'Merriweather', serif;">
@@ -47,7 +48,7 @@
                             Desa Tempang Tiga adalah salah satu desa di Kecamatan Langowan Utara yang dikenal dengan semangat gotong royong dan potensi pertanian yang melimpah.
                         </p>
 
-                        <div class="w-full h-48 sm:h-64 bg-gray-100 rounded-lg overflow-hidden shadow-sm"> {{-- Sesuaikan tinggi peta --}}
+                        <div class="w-full h-48 sm:h-64 bg-gray-100 rounded-lg overflow-hidden shadow-sm">
                             <iframe
                                 src="https://maps.google.com/maps?q=Desa%20Tempang%20Tiga%2C%20Langowan%20Utara&t=&z=15&ie=UTF8&iwloc=&output=embed"
                                 width="100%"
@@ -85,7 +86,7 @@
                         </p>
 
                         <div class="pl-2 text-center md:text-right"> 
-                            <a href="#"
+                            <a href="{{ route('sejarah') }}"
                                class="inline-flex items-center px-5 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                                 Selengkapnya
                             </a>
@@ -98,12 +99,13 @@
 
     <section id="statistik" class="bg-gray-50 py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-5 items-center gap-8 md:gap-12 text-center md:text-left"> {{-- Tambah gap md --}}
+            <div class="grid md:grid-cols-5 items-center gap-8 md:gap-12 text-center md:text-left">
 
                 <div class="md:col-span-2 space-y-4">
                     <h2 class="text-xl sm:text-2xl font-bold text-gray-900" style="font-family: 'Merriweather', serif;">
                         Statistik Desa
                     </h2>
+                    {{-- PERBAIKAN: Tombol Statistik Desa --}}
                     <a href="{{ route('demografis') }}"
                        class="inline-flex items-center px-5 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                         Selengkapnya
@@ -111,12 +113,14 @@
                 </div>
 
                 <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:justify-items-end md:text-right">
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none"> {{-- Styling card di mobile --}}
-                        <p class="text-4xl md:text-5xl font-light text-gray-900">1000+</p>
+                    <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
+                        {{-- PERBAIKAN: Data Penduduk Dinamis --}}
+                        <p class="text-4xl md:text-5xl font-light text-gray-900">{{ $dataDemografi->penduduk_total ?? '0' }}</p>
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Penduduk</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
-                        <p class="text-4xl md:text-5xl font-light text-gray-900">300+</p>
+                        {{-- PERBAIKAN: Data KK Dinamis --}}
+                        <p class="text-4xl md:text-5xl font-light text-gray-900">{{ $dataDemografi->kk_total ?? '0' }}</p>
                         <p class="text-gray-600 mt-1 md:mt-2 text-sm sm:text-base">Jumlah Keluarga</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm text-center md:text-right md:bg-transparent md:p-0 md:shadow-none">
@@ -138,10 +142,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 @forelse ($kegiatanTerbaru as $kegiatan)
-                    {{-- INTEGRASI: Tautan kartu kegiatan diarahkan ke halaman kegiatan --}}
-                    <a href="{{ route('kegiatan') }}" 
+                    {{-- PERBAIKAN: Tautan kartu kegiatan --}}
+                    <a href="{{ route('kegiatan') }}"
                        class="block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition group duration-300">
                         
+                        {{-- PERBAIKAN: Gunakan Storage::url() dan nama kolom 'gambar' --}}
                         <img src="{{ $kegiatan->gambar ? Storage::url($kegiatan->gambar) : asset('images/kegiatan-placeholder.jpg') }}" 
                              alt="{{ $kegiatan->judul ?? 'Kegiatan Desa' }}" 
                              class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105">
@@ -167,8 +172,8 @@
             </div>
 
             <div class="flex justify-center mt-10 md:mt-12">
-                {{-- INTEGRASI: Tombol "Lihat Semua Kegiatan" --}}
-                <a href="{{ route('kegiatan') }}" 
+                {{-- PERBAIKAN: Tombol "Lihat Semua Kegiatan" --}}
+                <a href="{{ route('kegiatan') }}"
                    class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                     Lihat Semua Kegiatan
                 </a>
@@ -185,10 +190,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse ($produkTerbaru as $produk)
-                    {{-- INTEGRASI: Tautan kartu produk diarahkan ke halaman produk --}}
-                    <a href="{{ route('produk') }}" 
+                    {{-- PERBAIKAN: Tautan kartu produk --}}
+                    <a href="{{ route('produk') }}"
                        class="block bg-gray-50 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition group duration-300">
                         
+                        {{-- PERBAIKAN: Gunakan Storage::url() --}}
                         <img src="{{ $produk->image ? Storage::url($produk->image) : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Produk' }}" 
                              alt="{{ $produk->nama_produk ?? 'Produk Desa' }}" 
                              class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105">
@@ -213,7 +219,7 @@
             </div>
 
             <div class="flex justify-center mt-10 md:mt-12">
-                {{-- INTEGRASI: Tombol "Lihat Semua Produk" --}}
+                {{-- PERBAIKAN: Tombol "Lihat Semua Produk" --}}
                 <a href="{{ route('produk') }}"
                    class="inline-flex items-center px-6 py-2 border border-gray-700 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition text-sm">
                     Lihat Semua Produk
@@ -260,7 +266,6 @@
                 <p class="text-gray-600 text-base md:text-lg">Realisasi dan Anggaran Dana Desa Tahun {{ $tahun }}</p> 
             </div>
 
-            {{-- Helper function untuk persen --}}
             @php
                 function hitungPersen($realisasi, $anggaran) {
                     if ($anggaran > 0) {
@@ -270,7 +275,6 @@
                 }
             @endphp
 
-            {{-- Cek apakah data anggaran (realisasi) ada --}}
             @if($anggaranTerbaru)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
                 
@@ -280,7 +284,6 @@
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p> 
                     <div class="space-y-4 md:space-y-6">
                         
-                        {{-- Item Pendapatan (Total) --}}
                         @php $persen = hitungPersen($total_anggaran_pendapatan, $total_perencanaan_pendapatan); @endphp
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pendapatan</p> 
@@ -293,7 +296,6 @@
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
                         
-                        {{-- Item Belanja (Total) --}}
                         @php $persen = hitungPersen($total_anggaran_belanja, $total_perencanaan_belanja); @endphp
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Belanja</p>
@@ -306,7 +308,6 @@
                             <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                         </div>
 
-                        {{-- Item Pembiayaan (Total) --}}
                         @php $persen = hitungPersen($realisasi_pembiayaan, $anggaran_pembiayaan); @endphp
                         <div>
                             <p class="font-medium text-gray-800 text-sm md:text-base">Pembiayaan</p>
@@ -327,44 +328,45 @@
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p>
                     <div class="space-y-4 md:space-y-6">
                         
-                        {{-- Item Dana Desa --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->dana_desa, $anggaranTerbaru->anggaran_dana_desa); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Dana Desa</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->dana_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_dana_desa, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                        {{-- Ini masih menggunakan struktur data APBDes LAMA --}}
+                        {{-- Jika Anda sudah migrasi ke struktur baru, ini perlu disesuaikan --}}
+                        @if (property_exists($anggaranTerbaru, 'dana_desa'))
+                            @php $persen = hitungPersen($anggaranTerbaru->dana_desa, $anggaranTerbaru->anggaran_dana_desa); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Dana Desa</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->dana_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_dana_desa, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
-                        
-                        {{-- Item Bagi Hasil Pajak --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->bagi_hasil_pajak, $anggaranTerbaru->anggaran_bagi_hasil_pajak); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Bagi Hasil Pajak & Retribusi</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->bagi_hasil_pajak, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_bagi_hasil_pajak, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                            
+                            @php $persen = hitungPersen($anggaranTerbaru->bagi_hasil_pajak, $anggaranTerbaru->anggaran_bagi_hasil_pajak); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Bagi Hasil Pajak & Retribusi</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->bagi_hasil_pajak, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_bagi_hasil_pajak, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
-                        
-                        {{-- Item Alokasi Dana Desa --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->alokasi_dana_desa, $anggaranTerbaru->anggaran_alokasi_dana_desa); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Alokasi Dana Desa</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->alokasi_dana_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_alokasi_dana_desa, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                            
+                            @php $persen = hitungPersen($anggaranTerbaru->alokasi_dana_desa, $anggaranTerbaru->anggaran_alokasi_dana_desa); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Alokasi Dana Desa</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->alokasi_dana_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_alokasi_dana_desa, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
+                        @endif
                     </div>
                 </div>
 
@@ -374,70 +376,67 @@
                     <p class="text-center text-gray-500 text-xs md:text-sm mb-6 md:mb-8">Realisasi | Anggaran</p>
                     <div class="space-y-4 md:space-y-6">
                         
-                        {{-- Item Penyelenggaraan --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->belanja_penyelenggaraan_pemerintahan_desa, $anggaranTerbaru->anggaran_penyelenggaraan_pemerintahan_desa); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Penyelenggaraan Pemerintahan Desa</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->belanja_penyelenggaraan_pemerintahan_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_penyelenggaraan_pemerintahan_desa, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                        @if (property_exists($anggaranTerbaru, 'belanja_penyelenggaraan_pemerintahan_desa'))
+                            @php $persen = hitungPersen($anggaranTerbaru->belanja_penyelenggaraan_pemerintahan_desa, $anggaranTerbaru->anggaran_penyelenggaraan_pemerintahan_desa); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Penyelenggaraan Pemerintahan Desa</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->belanja_penyelenggaraan_pemerintahan_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_penyelenggaraan_pemerintahan_desa, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
-                        
-                        {{-- Item Pembangunan --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->belanja_pelaksanaan_pembangunan_desa, $anggaranTerbaru->anggaran_pelaksanaan_pembangunan_desa); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Pelaksanaan Pembangunan Desa</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->belanja_pelaksanaan_pembangunan_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pelaksanaan_pembangunan_desa, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                            
+                            @php $persen = hitungPersen($anggaranTerbaru->belanja_pelaksanaan_pembangunan_desa, $anggaranTerbaru->anggaran_pelaksanaan_pembangunan_desa); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Pelaksanaan Pembangunan Desa</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->belanja_pelaksanaan_pembangunan_desa, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pelaksanaan_pembangunan_desa, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
-                        
-                        {{-- Item Pembinaan --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->belanja_pembinaan_kemasyarakatan, $anggaranTerbaru->anggaran_pembinaan_kemasyarakatan); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Pembinaan Kemasyarakatan</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->belanja_pembinaan_kemasyarakatan, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pembinaan_kemasyarakatan, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                            
+                            @php $persen = hitungPersen($anggaranTerbaru->belanja_pembinaan_kemasyarakatan, $anggaranTerbaru->anggaran_pembinaan_kemasyarakatan); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Pembinaan Kemasyarakatan</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->belanja_pembinaan_kemasyarakatan, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pembinaan_kemasyarakatan, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
-                        
-                        {{-- Item Pemberdayaan --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->belanja_pemberdayaan_masyarakat, $anggaranTerbaru->anggaran_pemberdayaan_masyarakat); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Pemberdayaan Masyarakat</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->belanja_pemberdayaan_masyarakat, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pemberdayaan_masyarakat, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                            
+                            @php $persen = hitungPersen($anggaranTerbaru->belanja_pemberdayaan_masyarakat, $anggaranTerbaru->anggaran_pemberdayaan_masyarakat); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Pemberdayaan Masyarakat</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->belanja_pemberdayaan_masyarakat, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_pemberdayaan_masyarakat, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
-                        
-                        {{-- Item Bencana --}}
-                        @php $persen = hitungPersen($anggaranTerbaru->belanja_penanggulangan_bencana, $anggaranTerbaru->anggaran_penanggulangan_bencana); @endphp
-                        <div>
-                            <p class="font-medium text-gray-800 text-sm md:text-base">Penanggulangan Bencana & Mendesak</p>
-                            <p class="text-xs md:text-sm text-gray-500 truncate">
-                                Rp {{ number_format($anggaranTerbaru->belanja_penanggulangan_bencana, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_penanggulangan_bencana, 0, ',', '.') }}
-                            </p>
-                            <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                            
+                            @php $persen = hitungPersen($anggaranTerbaru->belanja_penanggulangan_bencana, $anggaranTerbaru->anggaran_penanggulangan_bencana); @endphp
+                            <div>
+                                <p class="font-medium text-gray-800 text-sm md:text-base">Penanggulangan Bencana & Mendesak</p>
+                                <p class="text-xs md:text-sm text-gray-500 truncate">
+                                    Rp {{ number_format($anggaranTerbaru->belanja_penanggulangan_bencana, 0, ',', '.') }} | Rp {{ number_format($anggaranTerbaru->anggaran_penanggulangan_bencana, 0, ',', '.') }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 md:h-3 mt-1 md:mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:{{ $persen }}%"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
                             </div>
-                            <p class="text-xs font-semibold text-green-700 text-right mt-1">{{ number_format($persen, 0) }}%</p>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -449,7 +448,7 @@
             @endif
 
             <div class="mt-20 text-center">
-                {{-- INTEGRASI: Tombol "Selengkapnya" APBDes --}}
+                {{-- PERBAIKAN: Tombol "Selengkapnya" APBDes --}}
                 <a href="{{ route('apbdes') }}"
                    class="inline-flex items-center px-5 py-2 border border-green-700 text-green-800 rounded-full hover:bg-green-800 hover:text-white transition text-sm">
                     Selengkapnya
@@ -463,4 +462,3 @@
 
 </body>
 </html>
-

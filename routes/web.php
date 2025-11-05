@@ -11,7 +11,7 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AparaturDesaController;
-use App\Http\Controllers\DataDemografiController; // Pastikan namanya ini
+use App\Http\Controllers\DataDemografiController;
 use App\Http\Controllers\KontakAdminController;
 
 // --- Controller Bawaan Breeze ---
