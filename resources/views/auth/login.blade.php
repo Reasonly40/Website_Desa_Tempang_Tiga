@@ -149,21 +149,6 @@
                 </button>
             </div>
         </form>
-
-        {{-- === PENYESUAIAN: Tambahkan link ke halaman Register === --}}
-        @if (Route::has('register'))
-        <div class="register-link">
-            <p>
-                Belum punya akun? 
-                <a href="{{ route('register') }}">
-                    Daftar di sini
-                </a>
-            </p>
-        </div>
-        @endif
-        {{-- === AKHIR PENYESUAIAN === --}}
-
     </div>
 </body>
 </html>
-
