@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect; 
 
 // --- Controller untuk Halaman Publik ---
 use App\Http\Controllers\HomepageController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AparaturDesaController;
-use App\Http\Controllers\DataDemografiController;
+use App\Http\Controllers\DataDemografiController; 
 use App\Http\Controllers\KontakAdminController;
 
 // --- Controller Bawaan Breeze ---
@@ -61,6 +62,18 @@ Route::get('/pengembang', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Rute Redirect (Perbaikan)
+|--------------------------------------------------------------------------
+*/
+// Mengalihkan /dashboard -> /admin/dashboard
+// Keamanan (middleware auth) akan ditangani oleh grup rute '/admin' di bawah
+Route::get('/dashboard', function () {
+    return Redirect::to('/admin/dashboard');
+});
+
+
+/*
+|--------------------------------------------------------------------------
 | Rute Grup Panel Admin
 |--------------------------------------------------------------------------
 |
@@ -72,7 +85,7 @@ Route::get('/pengembang', function () {
 */
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'admin']) // Menambahkan 'admin' (dari CheckIsAdmin.php)
+    ->middleware(['auth', 'admin'])
     ->group(function () {
 
         // Rute Dasbor Admin Kustom
